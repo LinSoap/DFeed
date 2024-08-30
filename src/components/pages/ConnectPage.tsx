@@ -1,4 +1,3 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import { useKubo } from "../providers/KuboProvider";
@@ -13,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { FaLink } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const ConnectPage = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const ConnectPage = () => {
   const { connectKubo, isConnectedKubo } = useKubo();
   return (
     <>
-      <ConnectButton />
+      <ConnectButton showBalance={false} />
       {isConnected && <p>Welcome:{address}</p>}
       <InputGroup size="md">
         <Input
