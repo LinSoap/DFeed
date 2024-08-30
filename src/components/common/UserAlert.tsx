@@ -44,10 +44,15 @@ const UserAlert: React.FC<UserAlertProps> = ({
     >
       <VStack spacing={2} align="stretch">
         {alerts.map((alert) => (
-          <Alert key={alert.id} status="error" borderRadius="md" boxShadow="lg">
+          <Alert
+            key={alert.id}
+            status={alert.type}
+            borderRadius="md"
+            boxShadow="lg"
+          >
             <AlertIcon />
             <Box flex="1">
-              <AlertTitle mr={2}>Error</AlertTitle>
+              <AlertTitle mr={2}>{alert.type.toUpperCase()}</AlertTitle>
               <AlertDescription>{alert.message}</AlertDescription>
             </Box>
             <CloseButton

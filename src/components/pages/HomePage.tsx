@@ -3,14 +3,19 @@ import { useState } from "react";
 import { useKubo } from "../providers/KuboProvider";
 import { catFileFromPath, Uint8ArrayToText } from "../../utils/kubo";
 import { downloadFile } from "../../utils/download";
+import { useAlert } from "../providers/AlertProvider";
 
 const HomePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
   const { kuboClient } = useKubo();
-  console.log(file);
+  const { addAlert } = useAlert();
 
   const handleImport = async () => {
+    if (!file) {
+      addAlert("Please select a file", "warning");
+      return;
+    }
     console.log(kuboClient);
     if (!file) return;
     const res = await kuboClient?.add(file);
@@ -19,7 +24,10 @@ const HomePage = () => {
   };
 
   const handleExport = async () => {
-    if (!filePath) return;
+    if (!filePath) {
+      addAlert("Please import a file first", "warning");
+      return;
+    }
     const res = await catFileFromPath(filePath, kuboClient);
     const text = Uint8ArrayToText(res);
     console.log(text);
