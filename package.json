@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.13.0",
     "@rainbow-me/rainbowkit": "^2.1.5",
     "@tanstack/react-query": "^5.52.3",
+    "cids": "^1.1.9",
     "framer-motion": "^11.3.31",
     "kubo-rpc-client": "^4.1.1",
     "opml-generator": "^1.1.1",
