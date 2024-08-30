@@ -1,12 +1,5 @@
 import "@rainbow-me/rainbowkit/styles.css";
-import {
-  Box,
-  Grid,
-  GridItem,
-  Show,
-  useColorMode,
-  useTheme,
-} from "@chakra-ui/react";
+import { Grid, GridItem, useColorMode, useTheme } from "@chakra-ui/react";
 import { Outlet, useLocation } from "react-router-dom";
 import UserAlert from "../common/UserAlert";
 import { useAlert } from "../providers/AlertProvider";
@@ -18,6 +11,7 @@ const Layout = () => {
   const theme = useTheme();
   const location = useLocation();
   const isRoot = location.pathname === "/";
+  const hideLocation = ["/", "/connect"];
   const bgColorMain = theme.colors.custom.bgColorMain[colorMode];
   const bgColorAside = theme.colors.custom.bgColorAside[colorMode];
   const { alerts, removeAlert } = useAlert();
@@ -32,17 +26,20 @@ const Layout = () => {
         base: "1fr",
       }}
       height="100vh"
+      width="100vw"
     >
-      <Show above="lg">
-        <GridItem area="header" bg={bgColorAside} position={"fixed"}>
+      {!hideLocation.includes(location.pathname) ? (
+        <GridItem
+          area="header"
+          bg={bgColorAside}
+          position={"fixed"}
+          w="100%"
+          h="50px"
+        >
           <PageHeader />
         </GridItem>
-      </Show>
+      ) : null}
       <GridItem area="main" bg={bgColorMain} overflowY="auto">
-        <Show below="lg">
-          <Box bg={bgColorMain} width={"100%"}></Box>
-          <Box marginBottom={70} />
-        </Show>
         <Outlet />
         {isRoot && <WelcomePage />}
         <UserAlert alerts={alerts} onClose={removeAlert} />
