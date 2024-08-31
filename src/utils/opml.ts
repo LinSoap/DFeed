@@ -1,5 +1,5 @@
 import { XMLParser, XMLValidator } from "fast-xml-parser";
-const parser = new XMLParser({ ignoreAttributes: false ,attributeNamePrefix: ''});
+const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: ''});
 // const builder = new XMLBuilder();
 export function parseXML(xml: string) {
     let jObj = parser.parse(xml, true);

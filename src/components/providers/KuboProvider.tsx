@@ -6,7 +6,7 @@ const KuboContext = createContext<any>(null);
 export function KuboProvider({ children }: { children: React.ReactNode }) {
   const [cookies, setCookie] = useCookies(["gatewayUrl"]);
   const [gatewayUrl, setGatewayUrl] = useState(
-    cookies.gatewayUrl || "http://localhost:5002"
+    cookies.gatewayUrl || "http://localhost:5001"
   );
   const [kuboClient, setKuboClient] = useState<KuboRPCClient | null>(null);
   const [isConnectedKubo, setIsConnectedKubo] = useState(false);

@@ -1,4 +1,4 @@
-import { Button, Input, Textarea } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { useKubo } from "../providers/KuboProvider";
 import { catFileFromPath } from "../../utils/kubo";
@@ -6,12 +6,12 @@ import { downloadFile, readFileToString } from "../../utils/file";
 import { useAlert } from "../providers/AlertProvider";
 import { useOpml } from "../providers/OpmlProvider";
 import { validateXML } from "../../utils/opml";
+import OpmlInfoList from "../common/OpmlInfoList";
 
 const HomePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
-  const { parseOpml } = useOpml();
-  const [editOpml, setEditOpml] = useState<string | null>(null);
+  const { opml, parseOpml } = useOpml();
   const { kuboClient } = useKubo();
   const { addAlert } = useAlert();
 
@@ -31,8 +31,8 @@ const HomePage = () => {
     }
     const res = await kuboClient?.add(file);
     await parseOpml(opmlText);
+    console.log(opml);
     setFilePath(res.path);
-    setEditOpml(opmlText);
     addAlert("OPML file imported successfully", "success");
   };
 
@@ -54,13 +54,7 @@ const HomePage = () => {
       <p>{filePath}</p>
       <Button onClick={handleImport}>Import</Button>
       <Button onClick={handleExport}>Export</Button>
-      {editOpml && (
-        <Textarea
-          placeholder="Here is a sample placeholder"
-          value={editOpml}
-          onChange={(e) => setEditOpml(e.target.value)}
-        />
-      )}
+      <OpmlInfoList opml={opml} />
     </>
   );
 };
