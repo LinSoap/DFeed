@@ -4,9 +4,12 @@ import { useCookies } from "react-cookie";
 
 const KuboContext = createContext<any>(null);
 export function KuboProvider({ children }: { children: React.ReactNode }) {
-  const [cookies, setCookie] = useCookies(["gatewayUrl"]);
+  const [cookies, setCookie] = useCookies(["gatewayUrl", "opmlIpfsPath"]);
   const [gatewayUrl, setGatewayUrl] = useState(
     cookies.gatewayUrl || "http://localhost:5001"
+  );
+  const [opmlIpfsPath, setOpmlIpfsPath] = useState<string | null>(
+    cookies.opmlIpfsPath || null
   );
   const [kuboClient, setKuboClient] = useState<KuboRPCClient | null>(null);
   const [isConnectedKubo, setIsConnectedKubo] = useState(false);
@@ -25,12 +28,25 @@ export function KuboProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    if (opmlIpfsPath) {
+      setCookie("opmlIpfsPath", opmlIpfsPath);
+    }
+  }, [opmlIpfsPath]);
+
+  useEffect(() => {
     connectKubo(gatewayUrl);
   }, []);
 
   return (
     <KuboContext.Provider
-      value={{ gatewayUrl, kuboClient, connectKubo, isConnectedKubo }}
+      value={{
+        gatewayUrl,
+        kuboClient,
+        connectKubo,
+        isConnectedKubo,
+        opmlIpfsPath,
+        setOpmlIpfsPath,
+      }}
     >
       {children}
     </KuboContext.Provider>
