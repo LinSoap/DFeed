@@ -13,56 +13,13 @@ import {
 import { FaLink } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAlert } from "../providers/AlertProvider";
-import { downloadFile, readFileToString } from "../../utils/file";
-import { validateXML } from "../../utils/opml";
-import { useOpml } from "../providers/OpmlProvider";
-import { catFileFromPath } from "../../utils/kubo";
+import ImportOpml from "../common/ImportOpml";
 
 const ConnectPage = () => {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const [gatewayUrl, setGatewayUrl] = useState("");
-  const {
-    kuboClient,
-    connectKubo,
-    isConnectedKubo,
-    opmlIpfsPath,
-    setOpmlIpfsPath,
-  } = useKubo();
-  const { opml, parseOpml } = useOpml();
-  const [file, setFile] = useState<File | null>(null);
-  const { addAlert } = useAlert();
-
-  const handleImport = async () => {
-    if (!file) {
-      addAlert("Please select a file", "warning");
-      return;
-    }
-    if (!file.name.toLowerCase().endsWith(".opml")) {
-      addAlert("Please select a valid OPML file", "warning");
-      return;
-    }
-    const opmlText = await readFileToString(file);
-    if (!validateXML(opmlText)) {
-      addAlert("Invalid OPML file", "warning");
-      return;
-    }
-    const res = await kuboClient?.add(file);
-    await parseOpml(opmlText);
-    console.log(opml);
-    setOpmlIpfsPath(res.path);
-    addAlert("OPML file imported successfully", "success");
-  };
-
-  const handleExport = async () => {
-    if (!opmlIpfsPath) {
-      addAlert("Please import a file first", "warning");
-      return;
-    }
-    const res = await catFileFromPath(opmlIpfsPath, kuboClient);
-    downloadFile(res, "header.opml");
-  };
+  const { connectKubo, isConnectedKubo, opmlIpfsPath } = useKubo();
 
   return (
     <>
@@ -85,13 +42,7 @@ const ConnectPage = () => {
         </InputRightElement>
       </InputGroup>
       {isConnectedKubo && <p>kubo is available</p>}
-      <Input
-        type="file"
-        onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-      />
-      <p>{opmlIpfsPath}</p>
-      <Button onClick={handleImport}>Import</Button>
-      <Button onClick={handleExport}>Export</Button>
+      <ImportOpml />
       <HStack>
         <Text>
           {isConnected && isConnectedKubo

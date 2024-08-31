@@ -6,12 +6,12 @@ import { useKubo } from "../providers/KuboProvider";
 const WelcomePage = () => {
   const navigate = useNavigate();
   const { isConnected } = useAccount();
-  const { isConnectedKubo } = useKubo();
+  const { isConnectedKubo, opmlIpfsPath } = useKubo();
   return (
     <>
       <Button
         onClick={() => {
-          if (isConnected && isConnectedKubo) {
+          if (isConnected && isConnectedKubo && opmlIpfsPath) {
             navigate("/home");
           } else {
             navigate("/connect");

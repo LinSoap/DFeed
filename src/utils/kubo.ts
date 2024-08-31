@@ -1,4 +1,15 @@
 import { KuboRPCClient } from "kubo-rpc-client";
+import { CID } from 'multiformats/cid';
+
+export function isValidCID(cidStr: string) {
+  try {
+    CID.parse(cidStr);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 
 export async function catFileFromPath(path: string, kubo: KuboRPCClient) {
   const chunks = []; 
