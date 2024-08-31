@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/pages/_Layout.tsx";
 import { AlertProvider } from "./components/providers/AlertProvider.tsx";
 import HomePage from "./components/pages/HomePage.tsx";
+import { OpmlProvider } from "./components/providers/OpmlProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,9 @@ createRoot(document.getElementById("root")!).render(
     <AlertProvider>
       <DappProviders>
         <KuboProvider>
-          <RouterProvider router={router} />
+          <OpmlProvider>
+            <RouterProvider router={router} />
+          </OpmlProvider>
         </KuboProvider>
       </DappProviders>
     </AlertProvider>

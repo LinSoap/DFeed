@@ -1,13 +1,17 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { useKubo } from "../providers/KuboProvider";
-import { catFileFromPath, Uint8ArrayToText } from "../../utils/kubo";
-import { downloadFile } from "../../utils/download";
+import { catFileFromPath } from "../../utils/kubo";
+import { downloadFile, readFileToString } from "../../utils/file";
 import { useAlert } from "../providers/AlertProvider";
+import { useOpml } from "../providers/OpmlProvider";
+import { validateXML } from "../../utils/opml";
 
 const HomePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
+  const { parseOpml } = useOpml();
+  const [editOpml, setEditOpml] = useState<string | null>(null);
   const { kuboClient } = useKubo();
   const { addAlert } = useAlert();
 
@@ -16,11 +20,20 @@ const HomePage = () => {
       addAlert("Please select a file", "warning");
       return;
     }
-    console.log(kuboClient);
-    if (!file) return;
+    if (!file.name.toLowerCase().endsWith(".opml")) {
+      addAlert("Please select a valid OPML file", "warning");
+      return;
+    }
+    const opmlText = await readFileToString(file);
+    if (!validateXML(opmlText)) {
+      addAlert("Invalid OPML file", "warning");
+      return;
+    }
     const res = await kuboClient?.add(file);
+    await parseOpml(opmlText);
     setFilePath(res.path);
-    console.log(res);
+    setEditOpml(opmlText);
+    addAlert("OPML file imported successfully", "success");
   };
 
   const handleExport = async () => {
@@ -29,8 +42,6 @@ const HomePage = () => {
       return;
     }
     const res = await catFileFromPath(filePath, kuboClient);
-    const text = Uint8ArrayToText(res);
-    console.log(text);
     downloadFile(res, "header.opml");
   };
 
@@ -43,6 +54,13 @@ const HomePage = () => {
       <p>{filePath}</p>
       <Button onClick={handleImport}>Import</Button>
       <Button onClick={handleExport}>Export</Button>
+      {editOpml && (
+        <Textarea
+          placeholder="Here is a sample placeholder"
+          value={editOpml}
+          onChange={(e) => setEditOpml(e.target.value)}
+        />
+      )}
     </>
   );
 };
