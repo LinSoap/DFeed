@@ -53,6 +53,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
       const xml = buildOpml(opml);
       const res = await kuboClient?.add(xml);
       setOpmlIpfsPath(res.path);
+      setCookie("opml", opml);
       addAlert(`OPML uploaded to IPFS`, "success");
     } catch (error) {
       console.error("Can't upload OPML to IPFS:", error);
