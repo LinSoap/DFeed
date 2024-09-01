@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { parseXML } from "../../utils/opml";
 
@@ -6,6 +6,17 @@ const OpmlContext = createContext<any>(null);
 export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const [cookies, setCookie] = useCookies(["opml"]);
   const [opml, setOpml] = useState<any>(cookies.opml || null);
+  const [categories, setCategories] = useState([]);
+
+  // console.log(opml.opml.body.outline);
+
+  useEffect(() => {
+    if (opml) {
+      setCategories(
+        opml.opml.body.outline.map((category: any) => category.title)
+      );
+    }
+  }, [opml]);
 
   const parseOpml = async (opml: string) => {
     try {
@@ -17,8 +28,24 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const addOpmlListItem = (item: any, category: number) => {
+    setOpml((prevOpml: any) => {
+      const updatedOpml = { ...prevOpml };
+      updatedOpml.opml.body.outline[category].outline = [
+        ...(Array.isArray(updatedOpml.opml.body.outline[category].outline)
+          ? updatedOpml.opml.body.outline[category].outline
+          : []),
+        item,
+      ];
+      console.log(updatedOpml);
+      return updatedOpml;
+    });
+  };
+
   return (
-    <OpmlContext.Provider value={{ opml, parseOpml }}>
+    <OpmlContext.Provider
+      value={{ opml, parseOpml, addOpmlListItem, categories }}
+    >
       {children}
     </OpmlContext.Provider>
   );

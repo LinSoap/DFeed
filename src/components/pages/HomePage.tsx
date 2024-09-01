@@ -3,7 +3,7 @@ import OpmlInfoList from "../common/OpmlInfoList";
 import { Box, IconButton } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import AddOpmlListItem from "../common/AddOpmlListItem";
+import AddOpmlListItemModal from "../common/AddOpmlListItemModal";
 
 const HomePage = () => {
   const { opml } = useOpml();
@@ -22,7 +22,7 @@ const HomePage = () => {
           zIndex="1000"
           onClick={() => setIsOpenAddOpmlListItem(true)}
         />
-        <AddOpmlListItem
+        <AddOpmlListItemModal
           isOpen={isOpenAddOpmlListItem}
           onClose={() => setIsOpenAddOpmlListItem(false)}
         />

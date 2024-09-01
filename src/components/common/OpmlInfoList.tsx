@@ -7,8 +7,8 @@ const OpmlInfoList = (opml: any) => {
 
   const renderRssList = (outline: any) => {
     return Array.isArray(outline) ? (
-      outline.map((item: any) => (
-        <OpmlInfoListItem rssItem={item} key={item.text} />
+      outline.map((item: any, index: number) => (
+        <OpmlInfoListItem rssItem={item} key={index} />
       ))
     ) : (
       <OpmlInfoListItem rssItem={outline} />
