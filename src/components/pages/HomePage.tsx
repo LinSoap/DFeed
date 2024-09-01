@@ -19,7 +19,7 @@ const HomePage = () => {
     <>
       <Box justifyContent="center" alignItems="center">
         <OpmlInfoList opml={opml} />
-        <VStack spacing={4} position="fixed" bottom="20px" right="20px">
+        <VStack spacing={4} position="fixed" bottom="20px" left="20px">
           <Tooltip label="Upload OPML to IPFS">
             <IconButton
               icon={<SiIpfs />}

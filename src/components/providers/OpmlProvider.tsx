@@ -9,7 +9,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const [cookies, setCookie] = useCookies(["opml"]);
   const [opml, setOpml] = useState<any>(cookies.opml || null);
   const [categories, setCategories] = useState([]);
-  const { kuboClient } = useKubo();
+  const { kuboClient, setOpmlIpfsPath } = useKubo();
   const { addAlert } = useAlert();
 
   // console.log(opml.opml.body.outline);
@@ -51,7 +51,8 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const uploadOpmlToIpfs = async () => {
     try {
       const xml = buildOpml(opml);
-      await kuboClient?.add(xml);
+      const res = await kuboClient?.add(xml);
+      setOpmlIpfsPath(res.path);
       addAlert(`OPML uploaded to IPFS`, "success");
     } catch (error) {
       console.error("Can't upload OPML to IPFS:", error);
