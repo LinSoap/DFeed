@@ -19,9 +19,7 @@ const ConnectPage = () => {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const [gatewayUrl, setGatewayUrl] = useState("");
-  const { kuboClient, connectKubo, isConnectedKubo, opmlIpfsPath } = useKubo();
-
-  console.log(kuboClient);
+  const { connectKubo, isConnectedKubo, opmlIpfsPath } = useKubo();
 
   return (
     <>

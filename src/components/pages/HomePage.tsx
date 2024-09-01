@@ -1,14 +1,31 @@
 import { useOpml } from "../providers/OpmlProvider";
 import OpmlInfoList from "../common/OpmlInfoList";
-import { Box } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import AddOpmlListItem from "../common/AddOpmlListItem";
 
 const HomePage = () => {
   const { opml } = useOpml();
+  const [isOpenAddOpmlListItem, setIsOpenAddOpmlListItem] = useState(false);
 
   return (
     <>
       <Box justifyContent="center" alignItems="center">
         <OpmlInfoList opml={opml} />
+        <IconButton
+          icon={<AddIcon />}
+          position="fixed"
+          bottom="20px"
+          right="20px"
+          aria-label="Add"
+          zIndex="1000"
+          onClick={() => setIsOpenAddOpmlListItem(true)}
+        />
+        <AddOpmlListItem
+          isOpen={isOpenAddOpmlListItem}
+          onClose={() => setIsOpenAddOpmlListItem(false)}
+        />
       </Box>
     </>
   );
