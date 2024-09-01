@@ -26,14 +26,14 @@ const AddOpmlListItemModal = ({
   const { addOpmlListItem, categories } = useOpml();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [rssItem, setRssItem] = useState<{
-    text: string;
-    htmlUrl: string;
-    xmlUrl: string;
+    _text: string;
+    _htmlUrl: string;
+    _xmlUrl: string;
     [key: string]: any;
   }>({
-    text: "",
-    htmlUrl: "",
-    xmlUrl: "",
+    _text: "",
+    _htmlUrl: "",
+    _xmlUrl: "",
   });
 
   return (
@@ -48,9 +48,9 @@ const AddOpmlListItemModal = ({
               <Text>Text:</Text>
               <Input
                 type="text"
-                value={rssItem.text}
+                value={rssItem._text}
                 onChange={(e) =>
-                  setRssItem({ ...rssItem, text: e.target.value })
+                  setRssItem({ ...rssItem, _text: e.target.value })
                 }
               />
             </HStack>
@@ -58,9 +58,9 @@ const AddOpmlListItemModal = ({
               <Text>htmlURL:</Text>
               <Input
                 type="text"
-                value={rssItem.htmlUrl}
+                value={rssItem._htmlUrl}
                 onChange={(e) =>
-                  setRssItem({ ...rssItem, htmlUrl: e.target.value })
+                  setRssItem({ ...rssItem, _htmlUrl: e.target.value })
                 }
               />
             </HStack>
@@ -68,9 +68,9 @@ const AddOpmlListItemModal = ({
               <Text>xmlUrl:</Text>
               <Input
                 type="text"
-                value={rssItem.xmlUrl}
+                value={rssItem._xmlUrl}
                 onChange={(e) =>
-                  setRssItem({ ...rssItem, xmlUrl: e.target.value })
+                  setRssItem({ ...rssItem, _xmlUrl: e.target.value })
                 }
               />
             </HStack>

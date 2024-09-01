@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { parseXML } from "../../utils/opml";
+import { buildOpml, parseXML } from "../../utils/opml";
 
 const OpmlContext = createContext<any>(null);
 export function OpmlProvider({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (opml) {
       setCategories(
-        opml.opml.body.outline.map((category: any) => category.title)
+        opml.opml.body.outline.map((category: any) => category._title)
       );
     }
   }, [opml]);
@@ -38,6 +38,8 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
         item,
       ];
       console.log(updatedOpml);
+      const xml = buildOpml(updatedOpml);
+      console.log(xml);
       return updatedOpml;
     });
   };
