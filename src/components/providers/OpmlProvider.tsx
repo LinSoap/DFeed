@@ -1,12 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { buildOpml, parseXML } from "../../utils/opml";
+import { useKubo } from "./KuboProvider";
+import { useAlert } from "./AlertProvider";
 
 const OpmlContext = createContext<any>(null);
 export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const [cookies, setCookie] = useCookies(["opml"]);
   const [opml, setOpml] = useState<any>(cookies.opml || null);
   const [categories, setCategories] = useState([]);
+  const { kuboClient } = useKubo();
+  const { addAlert } = useAlert();
 
   // console.log(opml.opml.body.outline);
 
@@ -44,9 +48,20 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const uploadOpmlToIpfs = async () => {
+    try {
+      const xml = buildOpml(opml);
+      await kuboClient?.add(xml);
+      addAlert(`OPML uploaded to IPFS`, "success");
+    } catch (error) {
+      console.error("Can't upload OPML to IPFS:", error);
+      addAlert("Can't upload OPML to IPFS", "error");
+    }
+  };
+
   return (
     <OpmlContext.Provider
-      value={{ opml, parseOpml, addOpmlListItem, categories }}
+      value={{ opml, parseOpml, addOpmlListItem, categories, uploadOpmlToIpfs }}
     >
       {children}
     </OpmlContext.Provider>
