@@ -1,12 +1,15 @@
 import { useOpml } from "../providers/OpmlProvider";
 import OpmlInfoList from "../common/OpmlInfoList";
+import { Box } from "@chakra-ui/react";
 
 const HomePage = () => {
   const { opml } = useOpml();
 
   return (
     <>
-      <OpmlInfoList opml={opml} />
+      <Box justifyContent="center" alignItems="center">
+        <OpmlInfoList opml={opml} />
+      </Box>
     </>
   );
 };

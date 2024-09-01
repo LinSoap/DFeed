@@ -1,24 +1,18 @@
-import { Heading, List, ListItem, Box } from "@chakra-ui/react";
+import { Heading, List, ListItem } from "@chakra-ui/react";
+import OpmlInfoListItem from "./OpmlInfoListItem";
 
 const OpmlInfoList = (opml: any) => {
   const header = opml.opml.opml.head;
   const body = opml.opml.opml.body;
 
-  const renderRssItem = (item: any) => {
-    return (
-      <Box key={item.title}>
-        <Box fontWeight="bold">{item.title}</Box>
-        <Box>{item.title}</Box>
-        <Box>{item.xmlUrl}</Box>
-        <Box>{item.htmlUrl}</Box>
-      </Box>
-    );
-  };
-
   const renderRssList = (outline: any) => {
-    return Array.isArray(outline)
-      ? outline.map(renderRssItem)
-      : renderRssItem(outline);
+    return Array.isArray(outline) ? (
+      outline.map((item: any) => (
+        <OpmlInfoListItem rssItem={item} key={item.text} />
+      ))
+    ) : (
+      <OpmlInfoListItem rssItem={outline} />
+    );
   };
 
   return (
