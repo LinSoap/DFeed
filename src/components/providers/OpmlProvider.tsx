@@ -57,6 +57,16 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const updateOpmlGroupTitle = (index: number, newTitle: any) => {
+    setOpml((prevOpml: any) => {
+      const updatedOpml = { ...prevOpml };
+      updatedOpml.opml.body.outline[index]._title = newTitle;
+      updatedOpml.opml.body.outline[index]._text = newTitle;
+      console.log(updatedOpml);
+      return updatedOpml;
+    });
+  };
+
   const uploadOpmlToIpfs = async () => {
     try {
       const xml = buildOpml(opml);
@@ -78,6 +88,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
         addOpmlListItem,
         groups,
         addOpmlGroup,
+        updateOpmlGroupTitle,
         uploadOpmlToIpfs,
       }}
     >

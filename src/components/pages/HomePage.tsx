@@ -45,7 +45,6 @@ const HomePage = () => {
               zIndex="1000"
               onClick={() =>
                 addOpmlGroup({
-                  outline: [],
                   _text: "New Group",
                   _title: "New Group",
                 })

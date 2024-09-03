@@ -1,21 +1,56 @@
-import { Heading, List, ListItem } from "@chakra-ui/react";
+import {
+  ButtonGroup,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  Heading,
+  IconButton,
+  Input,
+  List,
+  ListItem,
+  useEditableControls,
+} from "@chakra-ui/react";
 import OpmlInfoListItem from "./OpmlInfoListItem";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { useOpml } from "../providers/OpmlProvider";
 
 const OpmlInfoList = (opml: any) => {
   const header = opml.opml.opml.head;
   const body = opml.opml.opml.body;
+  const { updateOpmlGroupTitle } = useOpml();
 
   const renderRssList = (outline: any) => {
     if (!outline.outline) {
       return null;
     }
-    console.log(Array.isArray(outline.outline));
     return Array.isArray(outline.outline) ? (
       outline.outline.map((item: any, index: number) => (
         <OpmlInfoListItem rssItem={item} key={index} />
       ))
     ) : (
       <OpmlInfoListItem rssItem={outline.outline} />
+    );
+  };
+
+  const EditableControls = () => {
+    const { isEditing, getSubmitButtonProps, getCancelButtonProps } =
+      useEditableControls();
+
+    return (
+      isEditing && (
+        <ButtonGroup justifyContent="center" size="sm">
+          <IconButton
+            icon={<CheckIcon />}
+            {...getSubmitButtonProps()}
+            aria-label="Save"
+          />
+          <IconButton
+            icon={<CloseIcon />}
+            {...getCancelButtonProps()}
+            aria-label="Cancel"
+          />
+        </ButtonGroup>
+      )
     );
   };
 
@@ -31,7 +66,18 @@ const OpmlInfoList = (opml: any) => {
             borderRadius="md"
             boxShadow="md"
           >
-            <Heading mb={4}>{outline._title}</Heading>
+            <Editable
+              textAlign="center"
+              defaultValue={outline._title}
+              fontSize="2xl"
+              onSubmit={(value) => {
+                updateOpmlGroupTitle(index, value);
+              }}
+            >
+              <EditablePreview />
+              <Input as={EditableInput} />
+              <EditableControls />
+            </Editable>
             {renderRssList(outline)}
           </ListItem>
         ))}
