@@ -23,8 +23,8 @@ const AddOpmlListItemModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { addOpmlListItem, categories } = useOpml();
-  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  const { addOpmlListItem, groups } = useOpml();
+  const [selectedGroup, setSelectedGroup] = useState<number>(0);
   const [rssItem, setRssItem] = useState<{
     _text: string;
     _htmlUrl: string;
@@ -75,14 +75,14 @@ const AddOpmlListItemModal = ({
               />
             </HStack>
             <HStack>
-              <Text>Category:</Text>
+              <Text>Group:</Text>
               <Select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(Number(e.target.value))}
+                value={selectedGroup}
+                onChange={(e) => setSelectedGroup(Number(e.target.value))}
               >
-                {categories.map((category: string, index: number) => (
+                {groups.map((group: string, index: number) => (
                   <option key={index} value={index}>
-                    {category}
+                    {group}
                   </option>
                 ))}
               </Select>
@@ -94,7 +94,7 @@ const AddOpmlListItemModal = ({
             justifyContent="center"
             alignItems="center"
           >
-            <Button onClick={() => addOpmlListItem(rssItem, selectedCategory)}>
+            <Button onClick={() => addOpmlListItem(rssItem, selectedGroup)}>
               Add
             </Button>
           </Box>

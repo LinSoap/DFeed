@@ -6,12 +6,16 @@ const OpmlInfoList = (opml: any) => {
   const body = opml.opml.opml.body;
 
   const renderRssList = (outline: any) => {
-    return Array.isArray(outline) ? (
-      outline.map((item: any, index: number) => (
+    if (!outline.outline) {
+      return null;
+    }
+    console.log(Array.isArray(outline.outline));
+    return Array.isArray(outline.outline) ? (
+      outline.outline.map((item: any, index: number) => (
         <OpmlInfoListItem rssItem={item} key={index} />
       ))
     ) : (
-      <OpmlInfoListItem rssItem={outline} />
+      <OpmlInfoListItem rssItem={outline.outline} />
     );
   };
 
@@ -27,7 +31,8 @@ const OpmlInfoList = (opml: any) => {
             borderRadius="md"
             boxShadow="md"
           >
-            {renderRssList(outline.outline)}
+            <Heading mb={4}>{outline._title}</Heading>
+            {renderRssList(outline)}
           </ListItem>
         ))}
       </List>

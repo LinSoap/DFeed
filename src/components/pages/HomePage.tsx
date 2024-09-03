@@ -10,10 +10,8 @@ import { downloadFile } from "../../utils/file";
 import { buildOpml } from "../../utils/opml";
 
 const HomePage = () => {
-  const { opml, uploadOpmlToIpfs } = useOpml();
+  const { opml, uploadOpmlToIpfs, addOpmlGroup } = useOpml();
   const [isOpenAddOpmlListItem, setIsOpenAddOpmlListItem] = useState(false);
-
-  console.log(opml);
 
   return (
     <>
@@ -38,6 +36,20 @@ const HomePage = () => {
               onClick={() => {
                 downloadFile(buildOpml(opml), "Ipfs-feed-box.OPML");
               }}
+            />
+          </Tooltip>
+          <Tooltip label="Add Group">
+            <IconButton
+              icon={<AddIcon />}
+              aria-label="Add Group"
+              zIndex="1000"
+              onClick={() =>
+                addOpmlGroup({
+                  outline: [],
+                  _text: "New Group",
+                  _title: "New Group",
+                })
+              }
             />
           </Tooltip>
           <Tooltip label="Add Item">

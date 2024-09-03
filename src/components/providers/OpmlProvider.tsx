@@ -8,7 +8,7 @@ const OpmlContext = createContext<any>(null);
 export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const [cookies, setCookie] = useCookies(["opml"]);
   const [opml, setOpml] = useState<any>(cookies.opml || null);
-  const [categories, setCategories] = useState([]);
+  const [groups, setGroups] = useState([]);
   const { kuboClient, setOpmlIpfsPath } = useKubo();
   const { addAlert } = useAlert();
 
@@ -16,9 +16,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (opml) {
-      setCategories(
-        opml.opml.body.outline.map((category: any) => category._title)
-      );
+      setGroups(opml.opml.body.outline.map((group: any) => group._title));
     }
   }, [opml]);
 
@@ -48,6 +46,17 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const addOpmlGroup = (newGroup: any) => {
+    // setGroups([...groups, newGroup]);
+    setOpml((prevOpml: any) => {
+      const updatedOpml = { ...prevOpml };
+      console.log(updatedOpml);
+      updatedOpml.opml.body.outline.push(newGroup);
+      console.log(updatedOpml);
+      return updatedOpml;
+    });
+  };
+
   const uploadOpmlToIpfs = async () => {
     try {
       const xml = buildOpml(opml);
@@ -63,7 +72,14 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <OpmlContext.Provider
-      value={{ opml, parseOpml, addOpmlListItem, categories, uploadOpmlToIpfs }}
+      value={{
+        opml,
+        parseOpml,
+        addOpmlListItem,
+        groups,
+        addOpmlGroup,
+        uploadOpmlToIpfs,
+      }}
     >
       {children}
     </OpmlContext.Provider>
