@@ -1,18 +1,15 @@
 import {
-  ButtonGroup,
   Editable,
   EditableInput,
   EditablePreview,
   Heading,
-  IconButton,
   Input,
   List,
   ListItem,
-  useEditableControls,
 } from "@chakra-ui/react";
 import OpmlInfoListItem from "./OpmlInfoListItem";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useOpml } from "../providers/OpmlProvider";
+import { EditableControls } from "./EditableControls";
 
 const OpmlInfoList = (opml: any) => {
   const header = opml.opml.opml.head;
@@ -25,32 +22,10 @@ const OpmlInfoList = (opml: any) => {
     }
     return Array.isArray(outline.outline) ? (
       outline.outline.map((item: any, index: number) => (
-        <OpmlInfoListItem rssItem={item} key={index} />
+        <OpmlInfoListItem rssItem={item} key={index} groupIndex={index} />
       ))
     ) : (
-      <OpmlInfoListItem rssItem={outline.outline} />
-    );
-  };
-
-  const EditableControls = () => {
-    const { isEditing, getSubmitButtonProps, getCancelButtonProps } =
-      useEditableControls();
-
-    return (
-      isEditing && (
-        <ButtonGroup justifyContent="center" size="sm">
-          <IconButton
-            icon={<CheckIcon />}
-            {...getSubmitButtonProps()}
-            aria-label="Save"
-          />
-          <IconButton
-            icon={<CloseIcon />}
-            {...getCancelButtonProps()}
-            aria-label="Cancel"
-          />
-        </ButtonGroup>
-      )
+      <OpmlInfoListItem rssItem={outline.outline} groupIndex={0} />
     );
   };
 
