@@ -4,11 +4,11 @@ import OpmlChiefListItem from "./OpmlChiefListItem";
 import { Button } from "@chakra-ui/react";
 
 const OpmlInfoListItem = ({
-  rssItem,
+  feed,
   itemIndex,
   groupIndex,
 }: {
-  rssItem: any;
+  feed: any;
   itemIndex: number;
   groupIndex: number;
 }) => {
@@ -16,10 +16,10 @@ const OpmlInfoListItem = ({
   return (
     <>
       {isChief ? (
-        <OpmlChiefListItem rssItem={rssItem} />
+        <OpmlChiefListItem feed={feed} />
       ) : (
         <OpmlDetailListItem
-          rssItem={rssItem}
+          feed={feed}
           itemIndex={itemIndex}
           groupIndex={groupIndex}
         />

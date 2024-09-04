@@ -16,11 +16,11 @@ import { EditableControls } from "./EditableControls";
 import { useOpml } from "../providers/OpmlProvider";
 
 const OpmlDetailListItem = ({
-  rssItem,
+  feed,
   itemIndex,
   groupIndex,
 }: {
-  rssItem: any;
+  feed: any;
   itemIndex: number;
   groupIndex: number;
 }) => {
@@ -30,10 +30,10 @@ const OpmlDetailListItem = ({
   return (
     <Box p={4} borderWidth={1} borderRadius="md" boxShadow="md">
       <List spacing={3}>
-        <Heading>{rssItem.text}</Heading>
-        {Object.keys(rssItem).map((key, index) => {
+        <Heading>{feed._text}</Heading>
+        {Object.keys(feed).map((key) => {
           // if (requiredKeys.includes(key)) return;
-          const value = rssItem[key];
+          const value = feed[key];
           return (
             <ListItem
               key={key}

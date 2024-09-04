@@ -23,7 +23,7 @@ const OpmlInfoList = (opml: any) => {
     return Array.isArray(outline.outline) ? (
       outline.outline.map((item: any, index: number) => (
         <OpmlInfoListItem
-          rssItem={item}
+          feed={item}
           key={index}
           itemIndex={index}
           groupIndex={groupIndex}
@@ -31,7 +31,7 @@ const OpmlInfoList = (opml: any) => {
       ))
     ) : (
       <OpmlInfoListItem
-        rssItem={outline.outline}
+        feed={outline.outline}
         itemIndex={0}
         groupIndex={groupIndex}
       />

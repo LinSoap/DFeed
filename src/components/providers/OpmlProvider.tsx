@@ -30,7 +30,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const addOpmlListItem = (item: any, category: number) => {
+  const addFeed = (item: any, category: number) => {
     setOpml((prevOpml: any) => {
       const updatedOpml = { ...prevOpml };
       updatedOpml.opml.body.outline[category].outline = [
@@ -39,9 +39,6 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
           : []),
         item,
       ];
-      console.log(updatedOpml);
-      const xml = buildOpml(updatedOpml);
-      console.log(xml);
       return updatedOpml;
     });
   };
@@ -99,7 +96,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
       value={{
         opml,
         parseOpml,
-        addOpmlListItem,
+        addFeed,
         groups,
         addOpmlGroup,
         updateOpmlGroupTitle,

@@ -5,9 +5,9 @@ import { AddIcon } from "@chakra-ui/icons";
 import { BiExport } from "react-icons/bi";
 import { SiIpfs } from "react-icons/si";
 import { useState } from "react";
-import AddOpmlListItemModal from "../common/AddOpmlListItemModal";
 import { downloadFile } from "../../utils/file";
 import { buildOpml } from "../../utils/opml";
+import AddFeedModal from "../common/AddFeedModal";
 
 const HomePage = () => {
   const { opml, uploadOpmlToIpfs, addOpmlGroup } = useOpml();
@@ -51,16 +51,16 @@ const HomePage = () => {
               }
             />
           </Tooltip>
-          <Tooltip label="Add Item">
+          <Tooltip label="Add Feed">
             <IconButton
               icon={<AddIcon />}
-              aria-label="Add"
+              aria-label="Add Feed"
               zIndex="1000"
               onClick={() => setIsOpenAddOpmlListItem(true)}
             />
           </Tooltip>
         </VStack>
-        <AddOpmlListItemModal
+        <AddFeedModal
           isOpen={isOpenAddOpmlListItem}
           onClose={() => setIsOpenAddOpmlListItem(false)}
         />

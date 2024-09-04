@@ -16,16 +16,16 @@ import {
 import { useState } from "react";
 import { useOpml } from "../providers/OpmlProvider";
 
-const AddOpmlListItemModal = ({
+const AddFeedModal = ({
   isOpen,
   onClose,
 }: {
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { addOpmlListItem, groups } = useOpml();
+  const { addFeed, groups } = useOpml();
   const [selectedGroup, setSelectedGroup] = useState<number>(0);
-  const [rssItem, setRssItem] = useState<{
+  const [feed, setFeed] = useState<{
     _text: string;
     _htmlUrl: string;
     _xmlUrl: string;
@@ -48,30 +48,24 @@ const AddOpmlListItemModal = ({
               <Text>Text:</Text>
               <Input
                 type="text"
-                value={rssItem._text}
-                onChange={(e) =>
-                  setRssItem({ ...rssItem, _text: e.target.value })
-                }
+                value={feed._text}
+                onChange={(e) => setFeed({ ...feed, _text: e.target.value })}
               />
             </HStack>
             <HStack>
               <Text>htmlURL:</Text>
               <Input
                 type="text"
-                value={rssItem._htmlUrl}
-                onChange={(e) =>
-                  setRssItem({ ...rssItem, _htmlUrl: e.target.value })
-                }
+                value={feed._htmlUrl}
+                onChange={(e) => setFeed({ ...feed, _htmlUrl: e.target.value })}
               />
             </HStack>
             <HStack>
               <Text>xmlUrl:</Text>
               <Input
                 type="text"
-                value={rssItem._xmlUrl}
-                onChange={(e) =>
-                  setRssItem({ ...rssItem, _xmlUrl: e.target.value })
-                }
+                value={feed._xmlUrl}
+                onChange={(e) => setFeed({ ...feed, _xmlUrl: e.target.value })}
               />
             </HStack>
             <HStack>
@@ -94,9 +88,7 @@ const AddOpmlListItemModal = ({
             justifyContent="center"
             alignItems="center"
           >
-            <Button onClick={() => addOpmlListItem(rssItem, selectedGroup)}>
-              Add
-            </Button>
+            <Button onClick={() => addFeed(feed, selectedGroup)}>Add</Button>
           </Box>
         </ModalBody>
       </ModalContent>
@@ -104,4 +96,4 @@ const AddOpmlListItemModal = ({
   );
 };
 
-export default AddOpmlListItemModal;
+export default AddFeedModal;
