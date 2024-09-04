@@ -16,16 +16,25 @@ const OpmlInfoList = (opml: any) => {
   const body = opml.opml.opml.body;
   const { updateOpmlGroupTitle } = useOpml();
 
-  const renderRssList = (outline: any) => {
+  const renderRssList = (outline: any, groupIndex: number) => {
     if (!outline.outline) {
       return null;
     }
     return Array.isArray(outline.outline) ? (
       outline.outline.map((item: any, index: number) => (
-        <OpmlInfoListItem rssItem={item} key={index} groupIndex={index} />
+        <OpmlInfoListItem
+          rssItem={item}
+          key={index}
+          itemIndex={index}
+          groupIndex={groupIndex}
+        />
       ))
     ) : (
-      <OpmlInfoListItem rssItem={outline.outline} groupIndex={0} />
+      <OpmlInfoListItem
+        rssItem={outline.outline}
+        itemIndex={0}
+        groupIndex={groupIndex}
+      />
     );
   };
 
@@ -53,7 +62,7 @@ const OpmlInfoList = (opml: any) => {
               <Input as={EditableInput} />
               <EditableControls />
             </Editable>
-            {renderRssList(outline)}
+            {renderRssList(outline, index)}
           </ListItem>
         ))}
       </List>

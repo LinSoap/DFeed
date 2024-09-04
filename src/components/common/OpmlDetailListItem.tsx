@@ -17,9 +17,11 @@ import { useOpml } from "../providers/OpmlProvider";
 
 const OpmlDetailListItem = ({
   rssItem,
+  itemIndex,
   groupIndex,
 }: {
   rssItem: any;
+  itemIndex: number;
   groupIndex: number;
 }) => {
   const { updateOpmlListItem } = useOpml();
@@ -47,8 +49,7 @@ const OpmlDetailListItem = ({
                   textAlign="left"
                   defaultValue={value}
                   onSubmit={(value) => {
-                    console.log(key, index);
-                    updateOpmlListItem(groupIndex, index, key, value);
+                    updateOpmlListItem(groupIndex, itemIndex, key, value);
                   }}
                 >
                   <InputGroup>
