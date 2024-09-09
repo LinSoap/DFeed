@@ -8,16 +8,35 @@ import { useState } from "react";
 import { downloadFile } from "../../utils/file";
 import { buildOpml } from "../../utils/opml";
 import AddFeedModal from "../common/AddFeedModal";
+import { FaEthereum } from "react-icons/fa";
+import { useDapp } from "../providers/DappProvider";
+import { useKubo } from "../providers/KuboProvider";
+import { useAccount } from "wagmi";
 
 const HomePage = () => {
+  const { address } = useAccount();
   const { opml, uploadOpmlToIpfs, addOpmlGroup } = useOpml();
+  const { opmlIpfsPath } = useKubo();
+  const { updateIPFSAddress } = useDapp();
   const [isOpenAddOpmlListItem, setIsOpenAddOpmlListItem] = useState(false);
 
   return (
     <>
       <Box justifyContent="center" alignItems="center">
         <OpmlInfoList opml={opml} />
+
         <VStack spacing={4} position="fixed" bottom="20px" left="20px">
+          <Tooltip label="Sync IPFS Path to Blockchain">
+            <IconButton
+              icon={<FaEthereum />}
+              aria-label="Sync IPFS Path to Blockchain"
+              zIndex="1000"
+              onClick={() => {
+                console.log(address, opmlIpfsPath);
+                updateIPFSAddress(opmlIpfsPath, address);
+              }}
+            />
+          </Tooltip>
           <Tooltip label="Upload OPML to IPFS">
             <IconButton
               icon={<SiIpfs />}

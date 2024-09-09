@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { useKubo } from "../providers/KuboProvider";
 import {
@@ -14,12 +14,24 @@ import { FaLink } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ImportOpml from "../common/ImportOpml";
+import { useDapp } from "../providers/DappProvider";
 
 const ConnectPage = () => {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const [gatewayUrl, setGatewayUrl] = useState("");
-  const { connectKubo, isConnectedKubo, opmlIpfsPath } = useKubo();
+  const { getIPFSAddress } = useDapp();
+  const { connectKubo, isConnectedKubo, opmlIpfsPath, setOpmlIpfsPath } =
+    useKubo();
+
+  const getIpfsAddress = async () => {
+    const ipfsAddress = await getIPFSAddress(address);
+    setOpmlIpfsPath(ipfsAddress);
+  };
+
+  useEffect(() => {
+    getIpfsAddress();
+  }, [address]);
 
   return (
     <>
