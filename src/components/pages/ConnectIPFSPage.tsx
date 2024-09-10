@@ -1,12 +1,12 @@
 import { Button, Input } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { useKubo } from "../providers/KuboProvider";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ConnectIPFSPage = () => {
-  const navigate = useNavigate();
   const [kuboUrl, setKuboUrl] = useState("");
-  const { isConnectedKubo, connectKubo } = useKubo();
+  const navigate = useNavigate();
+  const { connectKubo } = useKubo();
   return (
     <div>
       <Input
@@ -15,12 +15,7 @@ const ConnectIPFSPage = () => {
         placeholder="Kubo URL"
       />
       <Button onClick={() => connectKubo(kuboUrl)}>Connect</Button>
-      <Button
-        isDisabled={!isConnectedKubo}
-        onClick={() => navigate("/connect/opml")}
-      >
-        Next Step
-      </Button>
+      <Button onClick={() => navigate("/connect/opml")}>Next Step</Button>
     </div>
   );
 };
