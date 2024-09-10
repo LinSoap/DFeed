@@ -37,7 +37,7 @@ const Layout = () => {
       {!hideLocation.includes(location.pathname) ? (
         <GridItem
           area="header"
-          bg={bgColorAside}
+          // bg={bgColorAside}
           position={"fixed"}
           w="100%"
           h="50px"

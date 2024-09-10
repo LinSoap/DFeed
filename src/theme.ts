@@ -17,6 +17,11 @@ const theme = extendTheme({
         light: "#f8f8f8",
         dark: "#171717",
       },
+      themeColor: {
+        red: "#e40872",
+        blue: "#008fff",
+        gray: "#f4f4f4",
+      },
     },
   },
 });
