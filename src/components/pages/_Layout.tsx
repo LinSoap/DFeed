@@ -19,7 +19,6 @@ const Layout = () => {
     "/connect/opml",
   ];
   const bgColorMain = theme.colors.custom.bgColorMain[colorMode];
-  const bgColorAside = theme.colors.custom.bgColorAside[colorMode];
   const { alerts, removeAlert } = useAlert();
 
   return (
