@@ -11,7 +11,13 @@ const Layout = () => {
   const theme = useTheme();
   const location = useLocation();
   const isRoot = location.pathname === "/";
-  const hideLocation = ["/", "/connect"];
+  const hideLocation = [
+    "/",
+    "/connect",
+    "/connect/wallet",
+    "/connect/ipfs",
+    "/connect/opml",
+  ];
   const bgColorMain = theme.colors.custom.bgColorMain[colorMode];
   const bgColorAside = theme.colors.custom.bgColorAside[colorMode];
   const { alerts, removeAlert } = useAlert();

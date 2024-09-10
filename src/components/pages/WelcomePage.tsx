@@ -14,7 +14,7 @@ const WelcomePage = () => {
           if (isConnected && isConnectedKubo && opmlIpfsPath) {
             navigate("/home");
           } else {
-            navigate("/connect");
+            navigate("/connect/wallet");
           }
         }}
       >

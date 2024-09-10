@@ -8,7 +8,7 @@ const PageHeader = () => {
     <HStack justifyContent={"space-between"} paddingX={10} paddingY={1}>
       <Box display={"flex"} gap={2}>
         <Button onClick={() => navigate("/")}>Home</Button>
-        <Button onClick={() => navigate("/connect")}>Connect</Button>
+        <Button onClick={() => navigate("/connect/wallet")}>Connect</Button>
       </Box>
       <Box>
         <ConnectButton chainStatus="icon" showBalance={false} />

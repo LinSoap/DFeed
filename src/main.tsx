@@ -11,6 +11,9 @@ import Layout from "./components/pages/_Layout.tsx";
 import { AlertProvider } from "./components/providers/AlertProvider.tsx";
 import HomePage from "./components/pages/HomePage.tsx";
 import { OpmlProvider } from "./components/providers/OpmlProvider.tsx";
+import ConnectWalletPage from "./components/pages/ConnectWalletPage.tsx";
+import ConnectIPFSPage from "./components/pages/ConnectIPFSPage.tsx";
+import ConnectOpmlPage from "./components/pages/ConnectOpmlPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,20 @@ const router = createBrowserRouter([
       {
         path: "/connect",
         element: <ConnectPage />,
+        children: [
+          {
+            path: "wallet",
+            element: <ConnectWalletPage />,
+          },
+          {
+            path: "ipfs",
+            element: <ConnectIPFSPage />,
+          },
+          {
+            path: "opml",
+            element: <ConnectOpmlPage />,
+          },
+        ],
       },
       {
         path: "/home",
