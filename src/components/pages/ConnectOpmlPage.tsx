@@ -1,6 +1,6 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { readFileToString, downloadFile } from "../../utils/file";
 import { catFileFromPath, isValidCID } from "../../utils/kubo";
 import { validateXML } from "../../utils/opml";
@@ -21,7 +21,7 @@ const ConnectOpmlPage = () => {
   const { address } = useAccount();
   const { getIPFSAddress } = useDapp();
 
-  const getIPFSAddressFromBlockchain = async () => {
+  const handleGetIPFSAddressFromBlockchain = async () => {
     const ipfsAddress = await getIPFSAddress(address);
     if (ipfsAddress.length > 0) {
       addAlert("IPFS address found from blockchain", "success");
@@ -29,10 +29,6 @@ const ConnectOpmlPage = () => {
       setIsIpfsValid(isValidCID(ipfsAddress));
     }
   };
-
-  useEffect(() => {
-    getIPFSAddressFromBlockchain();
-  }, [address]);
 
   const handleImportFromLocal = async () => {
     if (!file) {
@@ -94,19 +90,24 @@ const ConnectOpmlPage = () => {
           onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
         />
       ) : (
-        <InputGroup>
-          <Input
-            value={importIpfsPath}
-            onChange={(e) => handleIpfsPathInput(e.target.value)}
-          />
-          <InputRightElement>
-            {isIpfsValid ? (
-              <CheckIcon color="green.500" />
-            ) : (
-              <CloseIcon color="red.500" />
-            )}
-          </InputRightElement>
-        </InputGroup>
+        <div>
+          <InputGroup>
+            <Input
+              value={importIpfsPath}
+              onChange={(e) => handleIpfsPathInput(e.target.value)}
+            />
+            <InputRightElement>
+              {isIpfsValid ? (
+                <CheckIcon color="green.500" />
+              ) : (
+                <CloseIcon color="red.500" />
+              )}
+            </InputRightElement>
+          </InputGroup>
+          <Button onClick={handleGetIPFSAddressFromBlockchain}>
+            Get IPFS Address from Blockchain
+          </Button>
+        </div>
       )}
       <Button
         onClick={isFromLocal ? handleImportFromLocal : handleImportFromIpfs}
