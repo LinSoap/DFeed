@@ -43,13 +43,7 @@ const OpmlInfoList = (opml: any) => {
       <Heading mb={4}>Rss Feed List: {header.title}</Heading>
       <List spacing={3}>
         {body.outline.map((outline: any, index: number) => (
-          <ListItem
-            key={index}
-            p={2}
-            borderWidth={1}
-            borderRadius="md"
-            boxShadow="md"
-          >
+          <ListItem key={index}>
             <Editable
               textAlign="center"
               defaultValue={outline._title}

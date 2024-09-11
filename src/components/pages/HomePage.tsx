@@ -22,7 +22,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Box justifyContent="center" alignItems="center">
+      <Box justifyContent="center" alignItems="center" paddingX={"5%"}>
         <OpmlInfoList opml={opml} />
 
         <VStack spacing={4} position="fixed" bottom="20px" left="20px">

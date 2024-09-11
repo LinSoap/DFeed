@@ -28,20 +28,14 @@ const OpmlDetailListItem = ({
   // const requiredKeys = ["_text"];
   //   const requiredKeys = ["text", "htmlUrl", "xmlUrl"];
   return (
-    <Box p={4} borderWidth={1} borderRadius="md" boxShadow="md">
+    <Box p={4}>
       <List spacing={3}>
         <Heading>{feed._text}</Heading>
         {Object.keys(feed).map((key) => {
           // if (requiredKeys.includes(key)) return;
           const value = feed[key];
           return (
-            <ListItem
-              key={key}
-              p={2}
-              borderWidth={1}
-              borderRadius="md"
-              bg="gray.100"
-            >
+            <ListItem key={key}>
               <HStack>
                 <Text>{key.replace("_", "")}:</Text>
                 <Editable
