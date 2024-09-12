@@ -48,6 +48,7 @@ const OpmlInfoList = (opml: any) => {
               textAlign="center"
               defaultValue={outline._title}
               fontSize="2xl"
+              fontWeight={"bold"}
               onSubmit={(value) => {
                 updateOpmlGroupTitle(index, value);
               }}

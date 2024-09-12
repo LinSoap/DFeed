@@ -1,4 +1,4 @@
-import StyledCard from "../styled/StyledCard";
+import { Accordion } from "@chakra-ui/react";
 import FeedItem from "./FeedItem";
 
 const OpmlInfoListItem = ({
@@ -12,9 +12,9 @@ const OpmlInfoListItem = ({
 }) => {
   return (
     <>
-      <StyledCard paddingX={"1.25rem"} paddingY={"1.5rem"} marginY={"1rem"}>
+      <Accordion allowMultiple>
         <FeedItem feed={feed} itemIndex={itemIndex} groupIndex={groupIndex} />
-      </StyledCard>
+      </Accordion>
     </>
   );
 };
