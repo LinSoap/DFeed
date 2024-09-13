@@ -80,7 +80,7 @@ const ConnectOpmlPage = () => {
     <div>
       <VStack paddingLeft={"2rem"} align={"start"}>
         <StyledHeading>OPML</StyledHeading>
-        <Text fontFamily={"Poppins"} fontSize={"16px"}>
+        <Text fontFamily={"Poppins"} fontSize={"16px"} marginRight={"1rem"}>
           Please upload the local OPML file or provide its IPFS address. We will
           parse and record its IPFS address, allowing you to easily manage your
           RSS subscription content.

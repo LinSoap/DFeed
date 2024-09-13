@@ -24,7 +24,7 @@ const ConnectWalletPage = () => {
     <div>
       <VStack paddingLeft={"2rem"} align={"start"}>
         <StyledHeading>Wallet</StyledHeading>
-        <Text fontFamily={"Poppins"} fontSize={"16px"}>
+        <Text fontFamily={"Poppins"} fontSize={"16px"} marginRight={"1rem"}>
           Please connect your crypto wallet for authentication and interaction
           with the smart contract to record the IPFS address of your OPML file.
         </Text>

@@ -12,7 +12,7 @@ const ConnectIPFSPage = () => {
     <>
       <VStack paddingLeft={"2rem"} align={"start"}>
         <StyledHeading>IPFS</StyledHeading>
-        <Text fontFamily={"Poppins"} fontSize={"16px"}>
+        <Text fontFamily={"Poppins"} fontSize={"16px"} marginRight={"1rem"}>
           Please connect to the IPFS network (Kubo node) to ensure proper
           uploading and access to the latest CID of your OPML file.
         </Text>
