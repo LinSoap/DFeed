@@ -23,31 +23,34 @@ const ConnectPage = () => {
       <StyledHeading fontSize={"80px"}>Conncect</StyledHeading>
       <StyledCard
         display={"flex"}
-        justifyContent={"center"}
-        align={"center"}
         position={"relative"}
-        paddingY={"5%"}
+        paddingY={"2%"}
         marginLeft={"auto"}
         marginRight={"auto"}
         backgroundColor={"#f4f4f4"}
-        maxWidth={"30rem"}
-        minHeight={"20rem"}
+        maxWidth={"40rem"}
+        minHeight={"30rem"}
         width={"100%"}
       >
         <Outlet />
-        <VStack position={"absolute"} bottom={"20px"}>
+        <VStack
+          position={"absolute"}
+          bottom={"20px"}
+          left={"50%"}
+          transform={"translateX(-50%)"}
+        >
           <HStack>
             <FaStar
               color={isConnected ? "#FFD700" : "black"}
-              style={{ transition: "color 0.3s ease" }} // 添加过渡效果
+              style={{ transition: "color 0.3s ease" }}
             />
             <FaStar
               color={isConnectedKubo ? "#FFD700" : "black"}
-              style={{ transition: "color 0.3s ease" }} // 添加过渡效果
+              style={{ transition: "color 0.3s ease" }}
             />
             <FaStar
               color={opml ? "#FFD700" : "black"}
-              style={{ transition: "color 0.3s ease" }} // 添加过渡效果
+              style={{ transition: "color 0.3s ease" }}
             />
           </HStack>
           <StyledButton

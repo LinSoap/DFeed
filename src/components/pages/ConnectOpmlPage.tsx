@@ -1,5 +1,11 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { Button, InputGroup, InputRightElement } from "@chakra-ui/react";
+import {
+  Button,
+  InputGroup,
+  InputRightElement,
+  VStack,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { readFileToString, downloadFile } from "../../utils/file";
 import { catFileFromPath, isValidCID } from "../../utils/kubo";
@@ -10,6 +16,7 @@ import { useOpml } from "../providers/OpmlProvider";
 import { useDapp } from "../providers/DappProvider";
 import { useAccount } from "wagmi";
 import StyledInput from "../styled/StyledInput";
+import StyledHeading from "../styled/StyledHeading";
 
 const ConnectOpmlPage = () => {
   const { addAlert } = useAlert();
@@ -82,6 +89,14 @@ const ConnectOpmlPage = () => {
 
   return (
     <div>
+      <VStack paddingLeft={"1rem"} align={"start"}>
+        <StyledHeading>OPML</StyledHeading>
+        <Text>
+          Please upload the local OPML file or provide its IPFS address. We will
+          parse and record its IPFS address, allowing you to easily manage your
+          RSS subscription content.
+        </Text>
+      </VStack>
       <Button onClick={() => setIsFromLocal(!isFromLocal)}>
         {isFromLocal ? "From IPFS" : "From Local"}
       </Button>
