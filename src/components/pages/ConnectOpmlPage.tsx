@@ -1,13 +1,7 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  InputGroup,
-  InputRightElement,
-  VStack,
-  Text,
-} from "@chakra-ui/react";
-import { useState } from "react";
-import { readFileToString, downloadFile } from "../../utils/file";
+import { InputGroup, InputRightElement, VStack, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { readFileToString } from "../../utils/file";
 import { catFileFromPath, isValidCID } from "../../utils/kubo";
 import { validateXML } from "../../utils/opml";
 import { useAlert } from "../providers/AlertProvider";
@@ -17,22 +11,26 @@ import { useDapp } from "../providers/DappProvider";
 import { useAccount } from "wagmi";
 import StyledInput from "../styled/StyledInput";
 import StyledHeading from "../styled/StyledHeading";
+import StyledButton from "../styled/StyledButton";
 
 const ConnectOpmlPage = () => {
   const { addAlert } = useAlert();
   const [file, setFile] = useState<File | null>(null);
   const [importIpfsPath, setImportIpfsPath] = useState("");
-  const [isFromLocal, setIsFromLocal] = useState(false);
   const [isIpfsValid, setIsIpfsValid] = useState(false);
   const { opml, parseOpml } = useOpml();
-  const { kuboClient, opmlIpfsPath, setOpmlIpfsPath } = useKubo();
+  const { kuboClient, setOpmlIpfsPath } = useKubo();
   const { address } = useAccount();
   const { getIPFSAddress } = useDapp();
+
+  useEffect(() => {
+    handleGetIPFSAddressFromBlockchain();
+  }, []);
 
   const handleGetIPFSAddressFromBlockchain = async () => {
     const ipfsAddress = await getIPFSAddress(address);
     if (ipfsAddress.length > 0) {
-      addAlert("IPFS address found from blockchain", "success");
+      // addAlert("IPFS address found from blockchain", "success");
       setImportIpfsPath(ipfsAddress);
       setIsIpfsValid(isValidCID(ipfsAddress));
     }
@@ -73,15 +71,6 @@ const ConnectOpmlPage = () => {
     addAlert("OPML file imported successfully", "success");
   };
 
-  const handleExport = async () => {
-    if (!opmlIpfsPath) {
-      addAlert("Please import a file first", "warning");
-      return;
-    }
-    const res = await catFileFromPath(opmlIpfsPath, kuboClient);
-    downloadFile(res, "header.opml");
-  };
-
   const handleIpfsPathInput = async (path: string) => {
     setImportIpfsPath(path);
     setIsIpfsValid(isValidCID(path));
@@ -89,48 +78,43 @@ const ConnectOpmlPage = () => {
 
   return (
     <div>
-      <VStack paddingLeft={"1rem"} align={"start"}>
+      <VStack paddingLeft={"2rem"} align={"start"}>
         <StyledHeading>OPML</StyledHeading>
-        <Text>
+        <Text fontFamily={"Poppins"} fontSize={"16px"}>
           Please upload the local OPML file or provide its IPFS address. We will
           parse and record its IPFS address, allowing you to easily manage your
           RSS subscription content.
         </Text>
       </VStack>
-      <Button onClick={() => setIsFromLocal(!isFromLocal)}>
-        {isFromLocal ? "From IPFS" : "From Local"}
-      </Button>
-      {isFromLocal ? (
+      <VStack align={"center"}>
         <StyledInput
           type="file"
+          width={"80%"}
           onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
         />
-      ) : (
-        <div>
-          <InputGroup>
-            <StyledInput
-              value={importIpfsPath}
-              onChange={(e) => handleIpfsPathInput(e.target.value)}
-            />
-            <InputRightElement>
-              {isIpfsValid ? (
-                <CheckIcon color="green.500" />
-              ) : (
-                <CloseIcon color="red.500" />
-              )}
-            </InputRightElement>
-          </InputGroup>
-          <Button onClick={handleGetIPFSAddressFromBlockchain}>
-            Get IPFS Address from Blockchain
-          </Button>
-        </div>
-      )}
-      <Button
-        onClick={isFromLocal ? handleImportFromLocal : handleImportFromIpfs}
-      >
-        Import
-      </Button>
-      <Button onClick={handleExport}>Export</Button>
+        <StyledButton color={"blue"} onClick={handleImportFromLocal}>
+          Import
+        </StyledButton>
+      </VStack>
+      <StyledHeading paddingLeft={"4rem"}>OR</StyledHeading>
+      <VStack align={"center"}>
+        <InputGroup width={"80%"}>
+          <StyledInput
+            value={importIpfsPath}
+            onChange={(e) => handleIpfsPathInput(e.target.value)}
+          />
+          <InputRightElement>
+            {isIpfsValid ? (
+              <CheckIcon color="green.500" />
+            ) : (
+              <CloseIcon color="red.500" />
+            )}
+          </InputRightElement>
+        </InputGroup>
+        <StyledButton color="blue" onClick={handleImportFromIpfs}>
+          Import
+        </StyledButton>
+      </VStack>
     </div>
   );
 };
