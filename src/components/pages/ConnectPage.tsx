@@ -4,9 +4,9 @@ import { useKubo } from "../providers/KuboProvider";
 import { useOpml } from "../providers/OpmlProvider";
 import StyledCard from "../styled/StyledCard";
 import StyledButton from "../styled/StyledButton";
-import { IconButton, VStack } from "@chakra-ui/react";
+import { HStack, IconButton, VStack } from "@chakra-ui/react";
 import StyledHeading from "../styled/StyledHeading";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaStar } from "react-icons/fa";
 
 const ConnectPage = () => {
   const { isConnected } = useAccount();
@@ -25,22 +25,31 @@ const ConnectPage = () => {
         display={"flex"}
         justifyContent={"center"}
         align={"center"}
-        position={"relative"} // 添加此行以启用绝对定位
+        position={"relative"}
         paddingY={"5%"}
         marginLeft={"auto"}
         marginRight={"auto"}
         backgroundColor={"#f4f4f4"}
         maxWidth={"30rem"}
+        minHeight={"20rem"}
         width={"100%"}
       >
         <Outlet />
-        <StyledButton
-          color={"red"}
-          isDisabled={!isConnected || !isConnectedKubo || !opml}
-          onClick={() => navigate("/home")}
-        >
-          Start
-        </StyledButton>
+        <VStack position={"absolute"} bottom={"20px"}>
+          <HStack>
+            <FaStar color={isConnected ? "#FFD700" : "black"} />
+            <FaStar color={isConnectedKubo ? "#FFD700" : "black"} />
+            <FaStar color={opml ? "#FFD700" : "black"} />
+          </HStack>
+          <StyledButton
+            color={"red"}
+            isDisabled={!isConnected || !isConnectedKubo || !opml}
+            onClick={() => navigate("/home")}
+          >
+            Start
+          </StyledButton>
+        </VStack>
+
         <IconButton
           icon={<FaAngleLeft />}
           position={"absolute"}
@@ -57,9 +66,7 @@ const ConnectPage = () => {
           onClick={() =>
             navigate(pages[(currentIndex - 1 + pages.length) % pages.length])
           }
-        >
-          ←
-        </IconButton>
+        />
         <IconButton
           icon={<FaAngleRight />}
           position={"absolute"}
@@ -74,9 +81,7 @@ const ConnectPage = () => {
           transform={"translateY(-50%)"}
           aria-label={""}
           onClick={() => navigate(pages[(currentIndex + 1) % pages.length])}
-        >
-          →
-        </IconButton>
+        />
       </StyledCard>
     </VStack>
   );
