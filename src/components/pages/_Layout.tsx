@@ -35,7 +35,7 @@ const Layout = () => {
           <PageHeader />
         </GridItem>
       ) : null}
-      <GridItem area="main" bg={"white"} overflowY="auto">
+      <GridItem area="main" bg={"white"} overflowY="auto" paddingX={"5%"}>
         <Outlet />
         {isRoot && <WelcomePage />}
         <UserAlert alerts={alerts} onClose={removeAlert} />

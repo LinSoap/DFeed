@@ -1,5 +1,5 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Button, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useState } from "react";
 import { readFileToString, downloadFile } from "../../utils/file";
 import { catFileFromPath, isValidCID } from "../../utils/kubo";
@@ -9,6 +9,7 @@ import { useKubo } from "../providers/KuboProvider";
 import { useOpml } from "../providers/OpmlProvider";
 import { useDapp } from "../providers/DappProvider";
 import { useAccount } from "wagmi";
+import StyledInput from "../styled/StyledInput";
 
 const ConnectOpmlPage = () => {
   const { addAlert } = useAlert();
@@ -85,14 +86,14 @@ const ConnectOpmlPage = () => {
         {isFromLocal ? "From IPFS" : "From Local"}
       </Button>
       {isFromLocal ? (
-        <Input
+        <StyledInput
           type="file"
           onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
         />
       ) : (
         <div>
           <InputGroup>
-            <Input
+            <StyledInput
               value={importIpfsPath}
               onChange={(e) => handleIpfsPathInput(e.target.value)}
             />

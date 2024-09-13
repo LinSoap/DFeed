@@ -1,7 +1,8 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useKubo } from "../providers/KuboProvider";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import StyledInput from "../styled/StyledInput";
 
 const ConnectIPFSPage = () => {
   const [kuboUrl, setKuboUrl] = useState("");
@@ -9,7 +10,7 @@ const ConnectIPFSPage = () => {
   const { connectKubo } = useKubo();
   return (
     <div>
-      <Input
+      <StyledInput
         value={kuboUrl}
         onChange={(e) => setKuboUrl(e.target.value)}
         placeholder="Kubo URL"
