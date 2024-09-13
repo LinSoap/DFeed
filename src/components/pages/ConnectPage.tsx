@@ -37,9 +37,18 @@ const ConnectPage = () => {
         <Outlet />
         <VStack position={"absolute"} bottom={"20px"}>
           <HStack>
-            <FaStar color={isConnected ? "#FFD700" : "black"} />
-            <FaStar color={isConnectedKubo ? "#FFD700" : "black"} />
-            <FaStar color={opml ? "#FFD700" : "black"} />
+            <FaStar
+              color={isConnected ? "#FFD700" : "black"}
+              style={{ transition: "color 0.3s ease" }} // 添加过渡效果
+            />
+            <FaStar
+              color={isConnectedKubo ? "#FFD700" : "black"}
+              style={{ transition: "color 0.3s ease" }} // 添加过渡效果
+            />
+            <FaStar
+              color={opml ? "#FFD700" : "black"}
+              style={{ transition: "color 0.3s ease" }} // 添加过渡效果
+            />
           </HStack>
           <StyledButton
             color={"red"}
