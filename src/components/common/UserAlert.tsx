@@ -6,6 +6,7 @@ import {
   CloseButton,
   Box,
   VStack,
+  useTheme,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { AlertItem } from "../providers/AlertProvider";
@@ -21,6 +22,8 @@ const UserAlert: React.FC<UserAlertProps> = ({
   onClose,
   autoCloseDuration = 5000,
 }) => {
+  const theme = useTheme();
+
   useEffect(() => {
     alerts.forEach((alert) => {
       const timer = setTimeout(() => {
@@ -47,8 +50,10 @@ const UserAlert: React.FC<UserAlertProps> = ({
           <Alert
             key={alert.id}
             status={alert.type}
-            borderRadius="md"
-            boxShadow="lg"
+            borderRadius={"20px"}
+            border={"3px solid"}
+            boxShadow={"4px 4px 0px 0px black"}
+            backgroundColor={theme.colors.custom.themeColor["gray"]}
           >
             <AlertIcon />
             <Box flex="1">
