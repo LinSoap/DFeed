@@ -37,3 +37,6 @@ export function TextToUint8Array(text:string) {
     return encoder.encode(text);
 }
 
+export const validateUrl = (url: string) => {
+  return /^(http|https):\/\/[^\s/$.?#].[^\s]*(:\d+)?$/.test(url); // 更新为支持http, 地址和端口的URL验证方法
+};

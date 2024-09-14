@@ -24,6 +24,7 @@ export function KuboProvider({ children }: { children: React.ReactNode }) {
       setCookie("gatewayUrl", url);
     } catch (error) {
       console.error("Can't connect to Kubo gateway:", error);
+      throw error;
     }
   };
 
