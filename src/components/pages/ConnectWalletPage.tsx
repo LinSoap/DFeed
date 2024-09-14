@@ -21,7 +21,7 @@ const ConnectWalletPage = () => {
   const chain = chains.find((c) => c.id === chainId);
 
   return (
-    <div>
+    <VStack height={"100%"}>
       <VStack paddingLeft={"2rem"} align={"start"}>
         <StyledHeading>Wallet</StyledHeading>
         <Text fontFamily={"Poppins"} fontSize={"16px"} marginRight={"1rem"}>
@@ -29,28 +29,33 @@ const ConnectWalletPage = () => {
           with the smart contract to record the IPFS address of your OPML file.
         </Text>
       </VStack>
-      <VStack align={"center"} justifyContent={"center"} height={"100%"}>
+      <VStack marginTop={"3rem"}>
         {openConnectModal && (
           <StyledButton
+            marginTop={"1rem"}
+            width={"10rem"}
             color={"blue"}
-            // justifyContent={"center"}
             onClick={openConnectModal}
           >
             Connect
           </StyledButton>
         )}
         {openAccountModal && (
-          <StyledButton color={"blue"} onClick={openAccountModal}>
+          <StyledButton
+            width={"10rem"}
+            color={"blue"}
+            onClick={openAccountModal}
+          >
             {chiefAddress}
           </StyledButton>
         )}
         {openChainModal && (
-          <StyledButton color={"blue"} onClick={openChainModal}>
+          <StyledButton width={"10rem"} color={"blue"} onClick={openChainModal}>
             {chain?.name}
           </StyledButton>
         )}
       </VStack>
-    </div>
+    </VStack>
   );
 };
 

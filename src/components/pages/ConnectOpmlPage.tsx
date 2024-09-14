@@ -15,16 +15,17 @@ import StyledButton from "../styled/StyledButton";
 
 const ConnectOpmlPage = () => {
   const { addAlert } = useAlert();
-  const [file, setFile] = useState<File | null>(null);
   const [importIpfsPath, setImportIpfsPath] = useState("");
   const [isIpfsValid, setIsIpfsValid] = useState(false);
   const { opml, parseOpml } = useOpml();
   const { kuboClient, setOpmlIpfsPath } = useKubo();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { getIPFSAddress } = useDapp();
 
   useEffect(() => {
-    handleGetIPFSAddressFromBlockchain();
+    if (isConnected) {
+      handleGetIPFSAddressFromBlockchain();
+    }
   }, []);
 
   const handleGetIPFSAddressFromBlockchain = async () => {
@@ -36,7 +37,7 @@ const ConnectOpmlPage = () => {
     }
   };
 
-  const handleImportFromLocal = async () => {
+  const handleImportFromLocal = async (file: File) => {
     if (!file) {
       addAlert("Please select a file", "warning");
       return;
@@ -76,6 +77,19 @@ const ConnectOpmlPage = () => {
     setIsIpfsValid(isValidCID(path));
   };
 
+  const handleFileSelect = async () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".opml";
+    fileInput.onchange = async (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files && target.files[0]) {
+        handleImportFromLocal(target.files[0]);
+      }
+    };
+    fileInput.click();
+  };
+
   return (
     <div>
       <VStack paddingLeft={"2rem"} align={"start"}>
@@ -87,31 +101,34 @@ const ConnectOpmlPage = () => {
         </Text>
       </VStack>
       <VStack align={"center"}>
-        <StyledInput
-          type="file"
-          width={"80%"}
-          onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-        />
-        <StyledButton color={"blue"} onClick={handleImportFromLocal}>
-          Import
+        <StyledButton width={"10rem"} color={"blue"} onClick={handleFileSelect}>
+          Select File
         </StyledButton>
+        <StyledHeading fontSize={"28px"} paddingTop={"2px"}>
+          OR
+        </StyledHeading>
       </VStack>
-      <StyledHeading paddingLeft={"4rem"}>OR</StyledHeading>
-      <VStack align={"center"}>
-        <InputGroup width={"80%"}>
+
+      <VStack justify="center" width="100%">
+        <InputGroup width={"75%"}>
           <StyledInput
+            placeholder={"IPFS Path"}
             value={importIpfsPath}
             onChange={(e) => handleIpfsPathInput(e.target.value)}
           />
           <InputRightElement>
             {isIpfsValid ? (
-              <CheckIcon color="green.500" />
+              <CheckIcon color="black" />
             ) : (
-              <CloseIcon color="red.500" />
+              <CloseIcon color="black" />
             )}
           </InputRightElement>
         </InputGroup>
-        <StyledButton color="blue" onClick={handleImportFromIpfs}>
+        <StyledButton
+          width={"10rem"}
+          color="blue"
+          onClick={handleImportFromIpfs}
+        >
           Import
         </StyledButton>
       </VStack>

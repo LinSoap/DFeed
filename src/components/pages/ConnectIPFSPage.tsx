@@ -17,12 +17,12 @@ const ConnectIPFSPage = () => {
           uploading and access to the latest CID of your OPML file.
         </Text>
       </VStack>
-      <VStack align={"center"} marginY={"1rem"}>
+      <VStack align={"center"} marginY={"5rem"}>
         <StyledInput
           value={kuboUrl}
           onChange={(e) => setKuboUrl(e.target.value)}
           placeholder="Kubo URL"
-          width={"80%"}
+          width={"75%"}
           mx={4}
         />
         <StyledButton

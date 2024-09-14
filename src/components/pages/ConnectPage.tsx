@@ -29,7 +29,7 @@ const ConnectPage = () => {
         marginRight={"auto"}
         backgroundColor={"#f4f4f4"}
         maxWidth={"40rem"}
-        minHeight={"30rem"}
+        minHeight={"27rem"}
         width={"100%"}
       >
         <Outlet />
