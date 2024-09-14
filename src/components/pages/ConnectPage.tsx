@@ -42,14 +42,23 @@ const ConnectPage = () => {
           <HStack>
             <FaStar
               color={isConnected ? "#FFD700" : "black"}
+              size={
+                window.location.pathname === "/connect/wallet" ? "20px" : "16px"
+              }
               style={{ transition: "color 0.3s ease" }}
             />
             <FaStar
               color={isConnectedKubo ? "#FFD700" : "black"}
+              size={
+                window.location.pathname === "/connect/ipfs" ? "20px" : "16px"
+              }
               style={{ transition: "color 0.3s ease" }}
             />
             <FaStar
               color={opml ? "#FFD700" : "black"}
+              size={
+                window.location.pathname === "/connect/opml" ? "20px" : "16px"
+              }
               style={{ transition: "color 0.3s ease" }}
             />
           </HStack>
