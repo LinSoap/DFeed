@@ -7,7 +7,6 @@ import {
   EditableInput,
   EditablePreview,
   HStack,
-  Input,
   InputGroup,
   InputRightElement,
   List,
@@ -17,6 +16,7 @@ import {
 import { useOpml } from "../providers/OpmlProvider";
 import { EditableControls } from "./EditableControls";
 import { FiPlusCircle, FiXCircle } from "react-icons/fi";
+import StyledInput from "../styled/StyledInput";
 
 const FeedItem = ({
   feed,
@@ -65,7 +65,7 @@ const FeedItem = ({
                         }}
                       >
                         <InputGroup>
-                          <Input as={EditableInput} />
+                          <StyledInput as={EditableInput} />
                           <EditablePreview />
                           <InputRightElement marginRight="30">
                             <EditableControls />

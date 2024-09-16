@@ -1,15 +1,17 @@
-import { Input, InputProps } from "@chakra-ui/react";
+import { Input, InputProps, useTheme } from "@chakra-ui/react";
 
 const StyledInput = ({
   children,
   ...props
 }: { children?: React.ReactNode } & InputProps) => {
+  const theme = useTheme();
+  const themeRed = theme.colors.custom.themeColor["red"];
   return (
     <Input
-      focusBorderColor="#e40872"
+      focusBorderColor={themeRed}
       border={"2px solid"}
-      _hover={{ borderColor: "#e40872" }}
-      _focus={{ borderColor: "e40872" }}
+      _hover={{ borderColor: themeRed }}
+      _focus={{ borderColor: themeRed }}
       {...props}
     >
       {children}

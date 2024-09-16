@@ -3,13 +3,13 @@ import {
   EditableInput,
   EditablePreview,
   Heading,
-  Input,
   List,
   ListItem,
 } from "@chakra-ui/react";
 import OpmlInfoListItem from "./OpmlInfoListItem";
 import { useOpml } from "../providers/OpmlProvider";
 import { EditableControls } from "./EditableControls";
+import StyledInput from "../styled/StyledInput";
 
 const OpmlInfoList = (opml: any) => {
   const header = opml.opml.opml.head;
@@ -54,7 +54,7 @@ const OpmlInfoList = (opml: any) => {
               }}
             >
               <EditablePreview />
-              <Input as={EditableInput} />
+              <StyledInput as={EditableInput} />
               <EditableControls />
             </Editable>
             {renderRssList(outline, index)}
