@@ -13,6 +13,7 @@ import { useDapp } from "../providers/DappProvider";
 import { useKubo } from "../providers/KuboProvider";
 import { useAccount } from "wagmi";
 import FloatIconButton from "../common/FloatIconButton";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 
 const HomePage = () => {
   const { address } = useAccount();
@@ -50,7 +51,7 @@ const HomePage = () => {
             }}
           />
           <FloatIconButton
-            icon={<AddIcon />}
+            icon={<MdOutlinePlaylistAdd />}
             label="Add Group"
             onClick={() => {
               addOpmlGroup({
