@@ -12,11 +12,14 @@ import {
   List,
   ListItem,
   Text,
+  useTheme,
+  VStack,
 } from "@chakra-ui/react";
 import { useOpml } from "../providers/OpmlProvider";
 import { EditableControls } from "./EditableControls";
-import { FiPlusCircle, FiXCircle } from "react-icons/fi";
+import { IoCloseCircleOutline, IoAddCircleOutline } from "react-icons/io5";
 import StyledInput from "../styled/StyledInput";
+import StyledButton from "../styled/StyledButton";
 
 const FeedItem = ({
   feed,
@@ -27,14 +30,15 @@ const FeedItem = ({
   itemIndex: number;
   groupIndex: number;
 }) => {
-  const { updateOpmlListItem } = useOpml();
+  const { updateOpmlListItem, deleteFeed } = useOpml();
+  const theme = useTheme();
   return (
     <AccordionItem
       borderRadius={"16px"}
       boxShadow={"4px 4px 0px 0px black"}
       border={"2px solid"}
       marginY={"1rem"}
-      backgroundColor="#f4f4f4"
+      backgroundColor={theme.colors.custom.themeColor["gray"]}
       transition="box-shadow 0.2s ease-in-out"
       _hover={{
         boxShadow: "6px 6px 0px 0px black",
@@ -42,11 +46,15 @@ const FeedItem = ({
     >
       {({ isExpanded }) => (
         <>
-          <AccordionButton paddingX={"1.25rem"} paddingY={"1.5rem"}>
+          <AccordionButton paddingX={"1.25rem"} paddingY={"1rem"}>
             <Box as="span" flex="1" textAlign="left" fontWeight={"bold"}>
               {feed._text}
             </Box>
-            {isExpanded ? <FiXCircle size={30} /> : <FiPlusCircle size={30} />}
+            {isExpanded ? (
+              <IoAddCircleOutline size={"30px"} />
+            ) : (
+              <IoCloseCircleOutline size={"30px"} />
+            )}
           </AccordionButton>
           <AccordionPanel pb={4} transition="all 0.5s ease-in-out">
             <List>
@@ -77,6 +85,14 @@ const FeedItem = ({
                 );
               })}
             </List>
+            <VStack justify={"center"} paddingTop={"1rem"}>
+              <StyledButton
+                color={"red"}
+                onClick={() => deleteFeed(groupIndex, itemIndex)}
+              >
+                Remove
+              </StyledButton>{" "}
+            </VStack>
           </AccordionPanel>
         </>
       )}

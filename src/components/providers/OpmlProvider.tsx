@@ -43,6 +43,20 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const deleteFeed = (category: number, itemIndex: number) => {
+    setOpml((prevOpml: any) => {
+      const updatedOpml = { ...prevOpml };
+      const outline = updatedOpml.opml.body.outline[category].outline;
+
+      if (!Array.isArray(outline)) {
+        updatedOpml.opml.body.outline[category].outline = [];
+      }
+
+      updatedOpml.opml.body.outline[category].outline.splice(itemIndex, 1);
+      return updatedOpml;
+    });
+  };
+
   const addOpmlGroup = (newGroup: any) => {
     // setGroups([...groups, newGroup]);
     setOpml((prevOpml: any) => {
@@ -102,6 +116,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
         updateOpmlGroupTitle,
         updateOpmlListItem,
         uploadOpmlToIpfs,
+        deleteFeed,
       }}
     >
       {children}

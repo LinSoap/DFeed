@@ -23,7 +23,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Box paddingX={"20%"}>
+      <Box paddingX={"25%"}>
         <OpmlInfoList opml={opml} />
 
         <VStack spacing={4} position="fixed" bottom="20px" left="20px">
