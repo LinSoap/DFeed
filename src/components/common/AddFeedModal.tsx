@@ -113,7 +113,10 @@ const AddFeedModal = ({
             <StyledButton
               color={"red"}
               marginTop={"1rem"}
-              onClick={() => addFeed(feed, selectedGroup)}
+              onClick={() => {
+                addFeed(feed, selectedGroup);
+                onClose();
+              }}
             >
               Add
             </StyledButton>
