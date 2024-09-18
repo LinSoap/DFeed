@@ -23,7 +23,7 @@ const ConnectOpmlPage = () => {
   const { addAlert } = useAlert();
   const [importIpfsPath, setImportIpfsPath] = useState("");
   const [isIpfsValid, setIsIpfsValid] = useState(false);
-  const { opml, parseOpml } = useOpml();
+  const { parseOpml } = useOpml();
   const { kuboClient, setOpmlIpfsPath } = useKubo();
   const { address, isConnected } = useAccount();
   const { getIPFSAddress } = useDapp();
@@ -59,7 +59,6 @@ const ConnectOpmlPage = () => {
     }
     const res = await kuboClient?.add(file);
     await parseOpml(opmlText);
-    console.log(opml);
     setOpmlIpfsPath(res.path);
     addAlert("OPML file imported successfully", "success");
   };
@@ -69,7 +68,6 @@ const ConnectOpmlPage = () => {
       const res = await catFileFromPath(importIpfsPath, kuboClient);
       const opmlText = new TextDecoder().decode(res);
       await parseOpml(opmlText);
-      console.log(opml);
       setOpmlIpfsPath(importIpfsPath);
     } else {
       addAlert("Invalid IPFS path", "warning");
@@ -99,19 +97,13 @@ const ConnectOpmlPage = () => {
   const handleClickNewFile = async () => {
     try {
       const response = await fetch("/example.opml");
-      console.log(response);
       const opmlText = await response.text();
-
-      console.log(opmlText);
-
-      // const res = await kuboClient?.add(new Blob([opmlText]));
+      const res = await kuboClient?.add(new Blob([opmlText]));
       await parseOpml(opmlText);
-      console.log(opml);
-      // setOpmlIpfsPath(res.path);
-      addAlert("示例OPML文件导入成功", "success");
+      setOpmlIpfsPath(res.path);
+      addAlert("New OPML file imported successfully", "success");
     } catch (error) {
-      console.error("导入示例OPML文件时出错:", error);
-      addAlert("导入示例OPML文件失败", "error");
+      addAlert("Failed to import example OPML file", "error");
     }
   };
 
