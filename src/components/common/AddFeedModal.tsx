@@ -27,18 +27,36 @@ const AddFeedModal = ({
   const [selectedGroup, setSelectedGroup] = useState<number>(0);
   const [feed, setFeed] = useState<{
     _text: string;
+    _title: string;
     _type: string;
     _htmlUrl: string;
     _xmlUrl: string;
     [key: string]: any;
   }>({
     _text: "",
+    _title: "",
     _type: "rss",
     _htmlUrl: "",
     _xmlUrl: "",
   });
 
   const theme = useTheme();
+
+  const handleAddFeed = () => {
+    const feedToAdd: Partial<typeof feed> = {
+      _text: feed._text,
+      _xmlUrl: feed._xmlUrl,
+    };
+
+    if (feed._title) feedToAdd._title = feed._title;
+    if (feed._type) feedToAdd._type = feed._type;
+    if (feed._htmlUrl) feedToAdd._htmlUrl = feed._htmlUrl;
+
+    addFeed(feedToAdd, selectedGroup);
+    onClose();
+  };
+
+  const isButtonDisabled = feed._text.length === 0 || feed._xmlUrl.length === 0;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
@@ -55,13 +73,35 @@ const AddFeedModal = ({
           <VStack spacing={2} paddingX={"1rem"}>
             <VStack width={"full"} align={"start"}>
               <Text fontFamily={"Poppins"} fontWeight={"bold"}>
-                Text:
+                Text*:
               </Text>
               <StyledInput
                 width={"100%"}
                 type="text"
                 value={feed._text}
+                isRequired={true}
                 onChange={(e) => setFeed({ ...feed, _text: e.target.value })}
+              />
+            </VStack>
+            <VStack width={"full"} align={"start"}>
+              <Text fontFamily={"Poppins"} fontWeight={"bold"}>
+                xmlUrl*:
+              </Text>
+              <StyledInput
+                type="text"
+                value={feed._xmlUrl}
+                onChange={(e) => setFeed({ ...feed, _xmlUrl: e.target.value })}
+              />
+            </VStack>
+            <VStack width={"full"} align={"start"}>
+              <Text fontFamily={"Poppins"} fontWeight={"bold"}>
+                Title:
+              </Text>
+              <StyledInput
+                width={"100%"}
+                type="text"
+                value={feed._title}
+                onChange={(e) => setFeed({ ...feed, _title: e.target.value })}
               />
             </VStack>
             <VStack width={"full"} align={"start"}>
@@ -76,14 +116,15 @@ const AddFeedModal = ({
             </VStack>
             <VStack width={"full"} align={"start"}>
               <Text fontFamily={"Poppins"} fontWeight={"bold"}>
-                xmlUrl:
+                Type:
               </Text>
               <StyledInput
                 type="text"
-                value={feed._xmlUrl}
-                onChange={(e) => setFeed({ ...feed, _xmlUrl: e.target.value })}
+                value={feed._type}
+                onChange={(e) => setFeed({ ...feed, _type: e.target.value })}
               />
             </VStack>
+
             <VStack width={"full"} align={"start"}>
               <Text fontFamily={"Poppins"} fontWeight={"bold"}>
                 Group:
@@ -113,10 +154,8 @@ const AddFeedModal = ({
             <StyledButton
               color={"red"}
               marginTop={"1rem"}
-              onClick={() => {
-                addFeed(feed, selectedGroup);
-                onClose();
-              }}
+              onClick={handleAddFeed}
+              isDisabled={isButtonDisabled}
             >
               Add
             </StyledButton>

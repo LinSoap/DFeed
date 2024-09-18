@@ -28,7 +28,7 @@ const PropEditable = ({
   const [value, setValue] = useState(defaultValue);
   const [isEdit, setIsEdit] = useState(false);
 
-  const necessaryProp = ["_text", "_htmlUrl", "_xmlUrl"];
+  const necessaryProp = ["_text", "_xmlUrl"];
 
   const { updateOpmlListItem, deleteOpmlListItemProp } = useOpml();
 
