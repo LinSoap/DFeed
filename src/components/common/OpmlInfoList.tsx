@@ -1,15 +1,7 @@
-import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Heading,
-  List,
-  ListItem,
-} from "@chakra-ui/react";
+import { Heading, List, ListItem } from "@chakra-ui/react";
 import OpmlInfoListItem from "./OpmlInfoListItem";
 import { useOpml } from "../providers/OpmlProvider";
-import { EditableControls } from "./EditableControls";
-import StyledInput from "../styled/StyledInput";
+import EditableText from "./TitleEditable";
 
 const OpmlInfoList = (opml: any) => {
   const header = opml.opml.opml.head;
@@ -44,19 +36,12 @@ const OpmlInfoList = (opml: any) => {
       <List spacing={3}>
         {body.outline.map((outline: any, index: number) => (
           <ListItem key={index}>
-            <Editable
-              textAlign="center"
+            <EditableText
+              index={index}
               defaultValue={outline._title}
-              fontSize="2xl"
-              fontWeight={"bold"}
-              onSubmit={(value) => {
-                updateOpmlGroupTitle(index, value);
-              }}
-            >
-              <EditablePreview />
-              <StyledInput as={EditableInput} />
-              <EditableControls />
-            </Editable>
+              updateOpmlGroupTitle={updateOpmlGroupTitle}
+              onDelete={() => console.log("delete")}
+            ></EditableText>
             {renderRssList(outline, index)}
           </ListItem>
         ))}

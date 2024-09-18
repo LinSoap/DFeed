@@ -76,7 +76,9 @@ const FeedItem = ({
                           <StyledInput as={EditableInput} />
                           <EditablePreview />
                           <InputRightElement marginRight="30">
-                            <EditableControls />
+                            <EditableControls
+                              onDelete={() => console.log(111)}
+                            />
                           </InputRightElement>
                         </InputGroup>
                       </Editable>
