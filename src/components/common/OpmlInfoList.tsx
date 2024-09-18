@@ -1,9 +1,9 @@
-import { Heading, List, ListItem } from "@chakra-ui/react";
+import { List, ListItem } from "@chakra-ui/react";
 import OpmlInfoListItem from "./OpmlInfoListItem";
 import EditableText from "./TitleEditable";
 
 const OpmlInfoList = (opml: any) => {
-  const header = opml.opml.opml.head;
+  // const header = opml.opml.opml.head;
   const body = opml.opml.opml.body;
 
   const renderRssList = (outline: any, groupIndex: number) => {
@@ -30,7 +30,6 @@ const OpmlInfoList = (opml: any) => {
 
   return (
     <>
-      <Heading mb={4}>Rss Feed List: {header.title}</Heading>
       <List spacing={3}>
         {body.outline.map((outline: any, index: number) => (
           <ListItem key={index}>
