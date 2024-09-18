@@ -28,6 +28,8 @@ const PropEditable = ({
   const [value, setValue] = useState(defaultValue);
   const [isEdit, setIsEdit] = useState(false);
 
+  const necessaryProp = ["_text", "_htmlUrl", "_xmlUrl", "_type"];
+
   const { updateOpmlListItem, deleteOpmlListItemProp } = useOpml();
 
   const isSubmitDisabled = value.trim().length === 0;
@@ -83,6 +85,7 @@ const PropEditable = ({
                     setIsEdit(false);
                   }}
                   size="xs"
+                  isDisabled={necessaryProp.includes(_key)}
                 />
               </ButtonGroup>
             </Box>
