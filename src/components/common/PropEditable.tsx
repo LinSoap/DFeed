@@ -28,7 +28,7 @@ const PropEditable = ({
   const [value, setValue] = useState(defaultValue);
   const [isEdit, setIsEdit] = useState(false);
 
-  const { updateOpmlListItem } = useOpml();
+  const { updateOpmlListItem, deleteOpmlListItemProp } = useOpml();
 
   const isSubmitDisabled = value.trim().length === 0;
 
@@ -79,6 +79,7 @@ const PropEditable = ({
                   border={"2px solid"}
                   aria-label="Delete"
                   onClick={() => {
+                    deleteOpmlListItemProp(groupIndex, itemIndex, _key);
                     setIsEdit(false);
                   }}
                   size="xs"

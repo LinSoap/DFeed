@@ -102,6 +102,22 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const deleteOpmlListItemProp = (
+    groupIndex: number,
+    itemIndex: number,
+    prop: string
+  ) => {
+    setOpml((prevOpml: any) => {
+      const updatedOpml = { ...prevOpml };
+      if (updatedOpml.opml.body.outline[groupIndex]?.outline[itemIndex]) {
+        const { [prop]: deletedProp, ...rest } =
+          updatedOpml.opml.body.outline[groupIndex].outline[itemIndex];
+        updatedOpml.opml.body.outline[groupIndex].outline[itemIndex] = rest;
+      }
+      return updatedOpml;
+    });
+  };
+
   const uploadOpmlToIpfs = async () => {
     try {
       const xml = buildOpml(opml);
@@ -126,6 +142,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
         deleteOpmlGroup,
         updateOpmlGroupTitle,
         updateOpmlListItem,
+        deleteOpmlListItemProp,
         uploadOpmlToIpfs,
         deleteFeed,
       }}
