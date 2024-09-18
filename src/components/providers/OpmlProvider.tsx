@@ -68,7 +68,17 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const updateOpmlGroupTitle = (index: number, newTitle: any) => {
+  const deleteOpmlGroup = (groupIndex: number) => {
+    setOpml((prevOpml: any) => {
+      const updatedOpml = { ...prevOpml };
+      if (Array.isArray(updatedOpml.opml.body.outline)) {
+        updatedOpml.opml.body.outline.splice(groupIndex, 1);
+      }
+      return updatedOpml;
+    });
+  };
+
+  const updateOpmlGroupTitle = (index: number, newTitle: string) => {
     setOpml((prevOpml: any) => {
       const updatedOpml = { ...prevOpml };
       updatedOpml.opml.body.outline[index]._title = newTitle;
@@ -113,6 +123,7 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
         addFeed,
         groups,
         addOpmlGroup,
+        deleteOpmlGroup,
         updateOpmlGroupTitle,
         updateOpmlListItem,
         uploadOpmlToIpfs,

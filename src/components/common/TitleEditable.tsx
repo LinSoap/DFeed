@@ -1,21 +1,21 @@
 import { useState } from "react";
-import { ButtonGroup, IconButton, Text, VStack } from "@chakra-ui/react";
+import { ButtonGroup, IconButton, VStack } from "@chakra-ui/react";
 import StyledInput from "../styled/StyledInput";
 import { MdCheck, MdClose, MdDeleteForever } from "react-icons/md";
+import { useOpml } from "../providers/OpmlProvider";
+import StyledHeading from "../styled/StyledHeading";
 
 const TitleEditable = ({
   index,
   defaultValue,
-  updateOpmlGroupTitle,
-  onDelete,
 }: {
   index: number;
   defaultValue: string;
-  updateOpmlGroupTitle: any;
-  onDelete: () => void;
 }) => {
   const [value, setValue] = useState(defaultValue);
   const [isEdit, setIsEdit] = useState(false);
+
+  const { updateOpmlGroupTitle, deleteOpmlGroup } = useOpml();
 
   const isSubmitDisabled = value.trim().length === 0;
 
@@ -24,6 +24,8 @@ const TitleEditable = ({
       {isEdit ? (
         <VStack>
           <StyledInput
+            fontSize={"24px"}
+            fontFamily={"Poppins"}
             textAlign={"center"}
             value={value}
             onChange={(e) => setValue(e.target.value)}
@@ -61,7 +63,7 @@ const TitleEditable = ({
               border={"2px solid"}
               aria-label="Delete"
               onClick={() => {
-                onDelete();
+                deleteOpmlGroup(index);
                 setIsEdit(false);
               }}
             />
@@ -70,7 +72,7 @@ const TitleEditable = ({
       ) : (
         <VStack align={"center"}>
           <button onClick={() => setIsEdit(true)}>
-            <Text> {defaultValue} </Text>
+            <StyledHeading fontSize={"3rem"}>{defaultValue}</StyledHeading>
           </button>
         </VStack>
       )}
