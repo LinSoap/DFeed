@@ -75,7 +75,7 @@ const FeedItem = ({
                 onClick={() => deleteFeed(groupIndex, itemIndex)}
               >
                 Remove
-              </StyledButton>{" "}
+              </StyledButton>
             </VStack>
           </AccordionPanel>
         </>
