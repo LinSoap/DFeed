@@ -16,6 +16,9 @@ const TitleEditable = ({
 }) => {
   const [value, setValue] = useState(defaultValue);
   const [isEdit, setIsEdit] = useState(false);
+
+  const isSubmitDisabled = value.trim().length === 0;
+
   return (
     <>
       {isEdit ? (
@@ -33,6 +36,7 @@ const TitleEditable = ({
               boxShadow={"2px 2px 0px 0px black"}
               border={"2px solid"}
               aria-label="Save"
+              isDisabled={isSubmitDisabled}
               onClick={() => {
                 updateOpmlGroupTitle(index, value);
                 setIsEdit(false);
