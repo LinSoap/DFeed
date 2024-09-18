@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ButtonGroup, IconButton, VStack } from "@chakra-ui/react";
+import { ButtonGroup, IconButton, useTheme, VStack } from "@chakra-ui/react";
 import StyledInput from "../styled/StyledInput";
 import { MdCheck, MdClose, MdDeleteForever } from "react-icons/md";
 import { useOpml } from "../providers/OpmlProvider";
@@ -12,6 +12,7 @@ const TitleEditable = ({
   index: number;
   defaultValue: string;
 }) => {
+  const theme = useTheme();
   const [value, setValue] = useState(defaultValue);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -33,7 +34,7 @@ const TitleEditable = ({
           <ButtonGroup justifyContent="center" size="sm">
             <IconButton
               icon={<MdCheck />}
-              backgroundColor="#f4f4f4"
+              backgroundColor={theme.colors.custom.themeColor["gray"]}
               borderRadius={"12px"}
               boxShadow={"2px 2px 0px 0px black"}
               border={"2px solid"}
@@ -46,7 +47,7 @@ const TitleEditable = ({
             />
             <IconButton
               icon={<MdClose />}
-              backgroundColor="#f4f4f4"
+              backgroundColor={theme.colors.custom.themeColor["gray"]}
               borderRadius={"12px"}
               boxShadow={"2px 2px 0px 0px black"}
               border={"2px solid"}
@@ -57,7 +58,7 @@ const TitleEditable = ({
             />
             <IconButton
               icon={<MdDeleteForever />}
-              backgroundColor="#f4f4f4"
+              backgroundColor={theme.colors.custom.themeColor["gray"]}
               borderRadius={"12px"}
               boxShadow={"2px 2px 0px 0px black"}
               border={"2px solid"}

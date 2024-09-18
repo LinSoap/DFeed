@@ -3,12 +3,7 @@ import {
   AccordionButton,
   Box,
   AccordionPanel,
-  Editable,
-  EditableInput,
-  EditablePreview,
   HStack,
-  InputGroup,
-  InputRightElement,
   List,
   ListItem,
   Text,
@@ -16,10 +11,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useOpml } from "../providers/OpmlProvider";
-import { EditableControls } from "./EditableControls";
 import { IoCloseCircleOutline, IoAddCircleOutline } from "react-icons/io5";
-import StyledInput from "../styled/StyledInput";
 import StyledButton from "../styled/StyledButton";
+import PropEditable from "./PropEditable";
 
 const FeedItem = ({
   feed,
@@ -30,7 +24,7 @@ const FeedItem = ({
   itemIndex: number;
   groupIndex: number;
 }) => {
-  const { updateOpmlListItem, deleteFeed } = useOpml();
+  const { deleteFeed } = useOpml();
   const theme = useTheme();
   return (
     <AccordionItem
@@ -64,24 +58,12 @@ const FeedItem = ({
                   <ListItem key={key}>
                     <HStack>
                       <Text>{key.replace("_", "")}:</Text>
-                      <Editable
-                        width="100%"
-                        textAlign="left"
+                      <PropEditable
+                        groupIndex={groupIndex}
+                        itemIndex={itemIndex}
+                        _key={key}
                         defaultValue={value}
-                        onSubmit={(value) => {
-                          updateOpmlListItem(groupIndex, itemIndex, key, value);
-                        }}
-                      >
-                        <InputGroup>
-                          <StyledInput as={EditableInput} />
-                          <EditablePreview />
-                          <InputRightElement marginRight="30">
-                            <EditableControls
-                              onDelete={() => console.log(111)}
-                            />
-                          </InputRightElement>
-                        </InputGroup>
-                      </Editable>
+                      />
                     </HStack>
                   </ListItem>
                 );
