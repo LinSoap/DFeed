@@ -1,5 +1,11 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { InputGroup, InputRightElement, VStack, Text } from "@chakra-ui/react";
+import {
+  InputGroup,
+  InputRightElement,
+  VStack,
+  Text,
+  HStack,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { readFileToString } from "../../utils/file";
 import { catFileFromPath, isValidCID } from "../../utils/kubo";
@@ -90,6 +96,25 @@ const ConnectOpmlPage = () => {
     fileInput.click();
   };
 
+  const handleClickNewFile = async () => {
+    try {
+      const response = await fetch("/example.opml");
+      console.log(response);
+      const opmlText = await response.text();
+
+      console.log(opmlText);
+
+      // const res = await kuboClient?.add(new Blob([opmlText]));
+      await parseOpml(opmlText);
+      console.log(opml);
+      // setOpmlIpfsPath(res.path);
+      addAlert("示例OPML文件导入成功", "success");
+    } catch (error) {
+      console.error("导入示例OPML文件时出错:", error);
+      addAlert("导入示例OPML文件失败", "error");
+    }
+  };
+
   return (
     <div>
       <VStack paddingLeft={"2rem"} align={"start"}>
@@ -101,9 +126,22 @@ const ConnectOpmlPage = () => {
         </Text>
       </VStack>
       <VStack align={"center"}>
-        <StyledButton width={"10rem"} color={"blue"} onClick={handleFileSelect}>
-          Select File
-        </StyledButton>
+        <HStack>
+          <StyledButton
+            width={"10rem"}
+            color={"blue"}
+            onClick={handleFileSelect}
+          >
+            Select File
+          </StyledButton>
+          <StyledButton
+            width={"10rem"}
+            color={"blue"}
+            onClick={handleClickNewFile}
+          >
+            New File
+          </StyledButton>
+        </HStack>
         <StyledHeading fontSize={"28px"} paddingTop={"2px"}>
           OR
         </StyledHeading>
