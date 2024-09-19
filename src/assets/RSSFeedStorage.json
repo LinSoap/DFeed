@@ -1,5 +1,22 @@
 [
-
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "newHash",
+          "type": "string"
+        }
+      ],
+      "name": "IPFSHashUpdated",
+      "type": "event"
+    },
     {
       "inputs": [
         {
@@ -8,26 +25,7 @@
           "type": "address"
         }
       ],
-      "name": "getIPFSAddress",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "ipfsAddresses",
+      "name": "getIPFSHash",
       "outputs": [
         {
           "internalType": "string",
@@ -42,11 +40,11 @@
       "inputs": [
         {
           "internalType": "string",
-          "name": "_ipfsAddress",
+          "name": "_ipfsHash",
           "type": "string"
         }
       ],
-      "name": "updateIPFSAddress",
+      "name": "updateIPFSHash",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

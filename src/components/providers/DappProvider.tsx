@@ -12,19 +12,20 @@ const queryClient = new QueryClient();
 const DappContext = React.createContext<any>(null);
 
 export function DappProviders({ children }: { children: React.ReactNode }) {
-  const contractAddress = "0xf5aAA19E6854413407F7A95E81B9BD3a1eC1A602";
+  // Sepolia TestNetWork Contract
+  const contractAddress = "0x63Bbcd45b669367034680093CeF5B8BFEee62C4d";
   let web3 = new Web3(window.ethereum);
   let contract = new web3.eth.Contract(contractABI, contractAddress);
 
   const updateIPFSAddress = async (ipfsPath: string, address: string) => {
     const ipfsAddress = await contract.methods
-      .updateIPFSAddress(ipfsPath)
+      .updateIPFSHash(ipfsPath)
       .send({ from: address });
     return ipfsAddress;
   };
 
   const getIPFSAddress = async (address: string) => {
-    const ipfsAddress = await contract.methods.getIPFSAddress(address).call();
+    const ipfsAddress = await contract.methods.getIPFSHash(address).call();
     return ipfsAddress;
   };
 
