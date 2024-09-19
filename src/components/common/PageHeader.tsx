@@ -18,17 +18,24 @@ const PageHeader = () => {
   return (
     <HStack justifyContent={"space-between"} paddingX={10} paddingY={1}>
       <Box display={"flex"} gap={2}>
-        <StyledButton color="red" onClick={() => navigate("/")}>
-          Home
-        </StyledButton>
+        <button
+          onClick={() => navigate("/")}
+          style={{ background: "none", border: "none", padding: 0 }}
+        >
+          <img
+            src="/logo.svg"
+            alt="logo"
+            style={{ width: "4rem", height: "4rem" }}
+          />
+        </button>
+      </Box>
+      <Box display={"flex"} gap={2}>
         <StyledButton color="blue" onClick={() => navigate("/connect/wallet")}>
           Connect
         </StyledButton>
-      </Box>
-      <Box>
         <StyledButton color="red" onClick={() => openChainModal?.()}>
           {chain?.name}
-        </StyledButton>{" "}
+        </StyledButton>
         <StyledButton color="blue" onClick={() => openAccountModal?.()}>
           {chiefAddress}
         </StyledButton>
