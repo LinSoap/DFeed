@@ -1,4 +1,4 @@
-import { Box, HStack, useTheme } from "@chakra-ui/react";
+import { Box, HStack, Text, useTheme } from "@chakra-ui/react";
 import {
   useAccountModal,
   useChainModal,
@@ -7,9 +7,13 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import StyledButton from "../styled/StyledButton";
 import { useAccount, useChainId, useChains } from "wagmi";
+import { useKubo } from "../providers/KuboProvider";
+import { useAlert } from "../providers/AlertProvider";
+import { useState } from "react";
 
 const PageHeader = () => {
   const theme = useTheme();
+  const { addAlert } = useAlert();
   const location = useLocation();
   const navigate = useNavigate();
   const { openConnectModal } = useConnectModal();
@@ -21,6 +25,22 @@ const PageHeader = () => {
   const chains = useChains();
 
   const chain = chains.find((c) => c.id === chainId);
+
+  const { opmlIpfsPath } = useKubo();
+  const cheifOpmlIpfsPath =
+    opmlIpfsPath?.slice(0, 6) + "..." + opmlIpfsPath?.slice(-4);
+
+  const [showFullPath, setShowFullPath] = useState(false);
+
+  const copyIpfsPath = async () => {
+    try {
+      await navigator.clipboard.writeText(opmlIpfsPath);
+      addAlert("IPFS address copied successfully", "success");
+    } catch (err) {
+      console.error("Copy failed:", err);
+      addAlert("Failed to copy IPFS address", "error");
+    }
+  };
 
   return (
     <HStack
@@ -53,8 +73,20 @@ const PageHeader = () => {
         <StyledButton color="blue" onClick={() => navigate("/connect/wallet")}>
           Connect
         </StyledButton>
+        {opmlIpfsPath && (
+          <StyledButton
+            color={"red"}
+            onClick={copyIpfsPath}
+            onMouseEnter={() => setShowFullPath(true)}
+            onMouseLeave={() => setShowFullPath(false)}
+          >
+            <Text userSelect="all">
+              {showFullPath ? opmlIpfsPath : cheifOpmlIpfsPath}
+            </Text>
+          </StyledButton>
+        )}
         {openConnectModal && (
-          <StyledButton color={"red"} onClick={openConnectModal}>
+          <StyledButton color={"blue"} onClick={openConnectModal}>
             Connect Wallet
           </StyledButton>
         )}
@@ -64,7 +96,7 @@ const PageHeader = () => {
           </StyledButton>
         )}
         {openAccountModal && (
-          <StyledButton color={"blue"} onClick={openAccountModal}>
+          <StyledButton color={"red"} onClick={openAccountModal}>
             {chiefAddress}
           </StyledButton>
         )}
