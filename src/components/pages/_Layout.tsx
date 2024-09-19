@@ -10,7 +10,7 @@ const Layout = () => {
   const location = useLocation();
   const isRoot = location.pathname === "/";
   const hideLocation = [
-    "/",
+    // "/",
     "/connect",
     "/connect/wallet",
     "/connect/ipfs",
@@ -35,7 +35,7 @@ const Layout = () => {
           <PageHeader />
         </GridItem>
       ) : null}
-      <GridItem area="main" bg={"white"} overflowY="auto" paddingX={"5%"}>
+      <GridItem area="main" bg={"white"} overflowY="auto">
         <Outlet />
         {isRoot && <WelcomePage />}
         <UserAlert alerts={alerts} onClose={removeAlert} />
