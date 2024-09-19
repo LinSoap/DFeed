@@ -19,12 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     errorElement: <ErrorPage />,
-    element: (
-      <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <Layout />
-      </ChakraProvider>
-    ),
+    element: <Layout />,
     children: [
       {
         path: "/connect",
@@ -54,14 +49,17 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AlertProvider>
-      <DappProviders>
-        <KuboProvider>
-          <OpmlProvider>
-            <RouterProvider router={router} />
-          </OpmlProvider>
-        </KuboProvider>
-      </DappProviders>
-    </AlertProvider>
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <AlertProvider>
+        <DappProviders>
+          <KuboProvider>
+            <OpmlProvider>
+              <RouterProvider router={router} />
+            </OpmlProvider>
+          </KuboProvider>
+        </DappProviders>
+      </AlertProvider>
+    </ChakraProvider>
   </StrictMode>
 );
