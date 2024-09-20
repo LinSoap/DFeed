@@ -1,50 +1,19 @@
-# React + TypeScript + Vite
+<div align="center">
+  <a href="https://github.com/RSSNext/Follow">
+    <img src="https://raw.githubusercontent.com/LinSoap/DFeed/695fd5785fad6d600874f2b60aa9d0e42f2ee5c2/src/assets/logo.svg" alt="Logo" width="80" height="80">
+  </a>
+  <h3>DFeed</h3>
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
+This project provides a decentralized solution for managing RSS feeds using OPML files, stored via IPFS. By mapping each user's OPML file to their blockchain wallet address, the platform allows for easy management, upload, and retrieval of these files. Every time a file is updated, the IPFS CID is automatically updated, ensuring the latest version is always accessible. This system offers basic OPML file operations, and leverages blockchain technology to securely link the user's wallet with their data.
 
-Currently, two official plugins are available:
+### Key features include:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ - IPFS-based storage for OPML files
+ - Wallet login for file management and access
+ - Automatic IPFS CID updates upon file changes
+ - Support for local opml file uploads and IPFS CID retrievals  
+  
+This project is ideal for users looking for a decentralized, secure, and efficient way to manage their RSS subscriptions.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
