@@ -21,7 +21,7 @@
     "fast-xml-parser": "^4.4.1",
     "framer-motion": "^11.3.31",
     "kubo-rpc-client": "^4.1.1",
-    "multiformats": "^13.2.2",
+    "multiformats": "^13.3.0",
     "react": "^18.3.1",
     "react-cookie": "^7.2.0",
     "react-dom": "^18.3.1",
