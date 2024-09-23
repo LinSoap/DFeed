@@ -4,7 +4,6 @@ import { buildOpml, parseXML } from "../../utils/opml";
 import { useKubo } from "./KuboProvider";
 import { useAlert } from "./AlertProvider";
 import { FleekSdk, ApplicationAccessTokenService } from "@fleek-platform/sdk";
-import { CID } from "multiformats/cid";
 
 const OpmlContext = createContext<any>(null);
 export function OpmlProvider({ children }: { children: React.ReactNode }) {
@@ -129,15 +128,14 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const uploadOpmlToIpfs = async () => {
     try {
       const xml = buildOpml(opml);
-      const res = await kuboClient?.add(xml);
-      const cidV1 = CID.parse(res.path).toV1().toString();
+      const res = await kuboClient?.add(xml, { cidVersion: 1 });
 
       await fleekSdk.ipfs().add({
-        path: cidV1,
+        path: res.path,
         content: xml,
       });
 
-      setOpmlIpfsPath(cidV1);
+      setOpmlIpfsPath(res.path);
       setCookie("opml", opml);
       addAlert(`OPML uploaded to IPFS`, "success");
     } catch (error) {
