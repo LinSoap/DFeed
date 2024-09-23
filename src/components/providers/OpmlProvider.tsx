@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { buildOpml, parseXML } from "../../utils/opml";
 import { useKubo } from "./KuboProvider";
 import { useAlert } from "./AlertProvider";
+import { FleekSdk, ApplicationAccessTokenService } from "@fleek-platform/sdk";
 
 const OpmlContext = createContext<any>(null);
 export function OpmlProvider({ children }: { children: React.ReactNode }) {
@@ -12,7 +13,13 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
   const { kuboClient, setOpmlIpfsPath } = useKubo();
   const { addAlert } = useAlert();
 
-  // console.log(opml.opml.body.outline);
+  const applicationService = new ApplicationAccessTokenService({
+    clientId: import.meta.env.VITE_FLEEK_CLIENT,
+  });
+
+  const fleekSdk = new FleekSdk({
+    accessTokenService: applicationService,
+  });
 
   useEffect(() => {
     if (opml) {
@@ -122,6 +129,14 @@ export function OpmlProvider({ children }: { children: React.ReactNode }) {
     try {
       const xml = buildOpml(opml);
       const res = await kuboClient?.add(xml);
+
+      const result = await fleekSdk.ipfs().add({
+        path: "opml/" + res.path,
+        content: xml,
+      });
+
+      console.log(result);
+
       setOpmlIpfsPath(res.path);
       setCookie("opml", opml);
       addAlert(`OPML uploaded to IPFS`, "success");
