@@ -13,7 +13,7 @@ import {
 import { useDapp } from "../providers/DappProvider";
 import StyledButton from "../styled/StyledButton";
 import { useKubo } from "../providers/KuboProvider";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import { useEffect, useState } from "react";
 
 const SyncBlockChainModal = ({
@@ -23,6 +23,7 @@ const SyncBlockChainModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
+  const chainId = useChainId();
   const { address, isConnected } = useAccount();
   const { getIPFSAddress, updateIPFSAddress } = useDapp();
   const [blockChainIpfsPath, setBlockChainIpfsPath] = useState(null);
@@ -36,7 +37,7 @@ const SyncBlockChainModal = ({
   }, []);
 
   const handleGetIPFSAddressFromBlockchain = async () => {
-    const ipfsAddress = await getIPFSAddress(address);
+    const ipfsAddress = await getIPFSAddress(address, chainId);
     if (ipfsAddress.length > 0) {
       setBlockChainIpfsPath(ipfsAddress);
     }
@@ -84,7 +85,7 @@ const SyncBlockChainModal = ({
               color={"red"}
               marginTop={"1rem"}
               onClick={async () => {
-                await updateIPFSAddress(opmlIpfsPath, address);
+                await updateIPFSAddress(opmlIpfsPath, address, chainId);
                 await handleGetIPFSAddressFromBlockchain();
               }}
               isDisabled={blockChainIpfsPath === opmlIpfsPath}

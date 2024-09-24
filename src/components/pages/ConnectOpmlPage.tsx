@@ -14,7 +14,7 @@ import { useAlert } from "../providers/AlertProvider";
 import { useKubo } from "../providers/KuboProvider";
 import { useOpml } from "../providers/OpmlProvider";
 import { useDapp } from "../providers/DappProvider";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import StyledInput from "../styled/StyledInput";
 import StyledHeading from "../styled/StyledHeading";
 import StyledButton from "../styled/StyledButton";
@@ -27,6 +27,7 @@ const ConnectOpmlPage = () => {
   const { kuboClient, setOpmlIpfsPath } = useKubo();
   const { address, isConnected } = useAccount();
   const { getIPFSAddress } = useDapp();
+  const chainId = useChainId();
 
   useEffect(() => {
     if (isConnected) {
@@ -35,7 +36,7 @@ const ConnectOpmlPage = () => {
   }, []);
 
   const handleGetIPFSAddressFromBlockchain = async () => {
-    const ipfsAddress = await getIPFSAddress(address);
+    const ipfsAddress = await getIPFSAddress(address, chainId);
     if (ipfsAddress.length > 0) {
       // addAlert("IPFS address found from blockchain", "success");
       setImportIpfsPath(ipfsAddress);
