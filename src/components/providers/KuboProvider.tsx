@@ -17,7 +17,6 @@ export function KuboProvider({ children }: { children: React.ReactNode }) {
   const connectKubo = async (url: string) => {
     try {
       const client = create({ url });
-      await client.id();
       setGatewayUrl(url);
       setKuboClient(client);
       setIsConnectedKubo(true);
