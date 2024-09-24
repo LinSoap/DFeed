@@ -34,7 +34,7 @@ const SyncBlockChainModal = ({
     if (isConnected) {
       handleGetIPFSAddressFromBlockchain();
     }
-  }, []);
+  }, [isOpen]);
 
   const handleGetIPFSAddressFromBlockchain = async () => {
     const ipfsAddress = await getIPFSAddress(address, chainId);
