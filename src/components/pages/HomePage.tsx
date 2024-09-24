@@ -9,18 +9,14 @@ import { downloadFile } from "../../utils/file";
 import { buildOpml } from "../../utils/opml";
 import AddFeedModal from "../common/AddFeedModal";
 import { FaEthereum } from "react-icons/fa";
-import { useDapp } from "../providers/DappProvider";
-import { useKubo } from "../providers/KuboProvider";
-import { useAccount } from "wagmi";
 import FloatIconButton from "../common/FloatIconButton";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import SyncBlockChainModal from "../common/SyncBlockChainModal";
 
 const HomePage = () => {
-  const { address } = useAccount();
   const { opml, uploadOpmlToIpfs, addOpmlGroup } = useOpml();
-  const { opmlIpfsPath } = useKubo();
-  const { updateIPFSAddress } = useDapp();
   const [isOpenAddOpmlListItem, setIsOpenAddOpmlListItem] = useState(false);
+  const [isOpenSyncBlockChain, setIsOpenSyncBlockChain] = useState(false);
 
   return (
     <>
@@ -31,10 +27,7 @@ const HomePage = () => {
           <FloatIconButton
             icon={<FaEthereum />}
             label="Sync IPFS Path to Blockchain"
-            onClick={() => {
-              console.log(address, opmlIpfsPath);
-              updateIPFSAddress(opmlIpfsPath, address);
-            }}
+            onClick={() => setIsOpenSyncBlockChain(true)}
           />
           <FloatIconButton
             icon={<SiIpfs />}
@@ -69,6 +62,10 @@ const HomePage = () => {
         <AddFeedModal
           isOpen={isOpenAddOpmlListItem}
           onClose={() => setIsOpenAddOpmlListItem(false)}
+        />
+        <SyncBlockChainModal
+          isOpen={isOpenSyncBlockChain}
+          onClose={() => setIsOpenSyncBlockChain(false)}
         />
       </Box>
     </>
